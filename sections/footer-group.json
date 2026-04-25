@@ -8,24 +8,42 @@
  * ------------------------------------------------------------
  */
 {
-  "name": "t:sections.footer.name",
+  "name": "Footer",
   "type": "footer",
   "sections": {
     "footer": {
       "type": "footer",
+      "blocks": {
+        "links_primary": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Shop",
+            "menu": "main-menu"
+          }
+        },
+        "links_secondary": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Info",
+            "menu": "footer"
+          }
+        }
+      },
+      "block_order": [
+        "links_primary",
+        "links_secondary"
+      ],
       "settings": {
-        "color_scheme": "scheme-4",
-        "newsletter_enable": true,
+        "color_scheme": "scheme-2",
+        "footer_intro": "<p>Quiet luxury skincare with a clean point of view, formulated for rituals that feel effortless.</p>",
+        "newsletter_enable": false,
         "newsletter_heading": "Join our email list",
-        "enable_follow_on_shop": true,
+        "newsletter_text": "<p>Receive new launches, routines, and thoughtful updates.</p>",
         "show_social": true,
-        "enable_country_selector": true,
-        "enable_language_selector": true,
-        "payment_enable": true,
         "show_policy": true,
         "margin_top": 0,
-        "padding_top": 36,
-        "padding_bottom": 36
+        "padding_top": 20,
+        "padding_bottom": 20
       }
     }
   },

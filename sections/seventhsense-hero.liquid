@@ -1,0 +1,236 @@
+{%- liquid
+  assign showcase_product = section.settings.featured_product
+  if showcase_product == blank and collections.all != blank and collections.all.products_count > 0
+    assign showcase_product = collections.all.products.first
+  endif
+
+  assign hero_image = section.settings.hero_image
+  if hero_image == blank and showcase_product != blank
+    assign hero_image = showcase_product.featured_image
+  endif
+
+  assign hero_alt = hero_image.alt
+  if hero_alt == blank and showcase_product != blank
+    assign hero_alt = showcase_product.title
+  endif
+  if hero_alt == blank
+    assign hero_alt = section.settings.heading | strip_html
+  endif
+
+  assign cta_link = section.settings.cta_link | default: routes.all_products_collection_url
+  assign hero_video = section.settings.hero_video
+
+  capture showcase_price
+    if showcase_product != blank
+      if showcase_product.price_varies
+        echo showcase_product.price_min | money
+        echo ' - '
+        echo showcase_product.price_max | money
+      else
+        echo showcase_product.price | money
+      endif
+    endif
+  endcapture
+-%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="ss-section ss-shell ss-hero-section section-{{ section.id }}-padding">
+  <div class="page-width">
+    <div class="ss-hero">
+      <div class="ss-hero__content" data-ss-reveal>
+        <div class="ss-brand-lockup">
+          {%- if section.settings.show_theme_logo and settings.logo != blank -%}
+            <span class="ss-brand-lockup__logo">
+              {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+              {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+              {{
+                settings.logo
+                | image_url: width: 320
+                | image_tag:
+                  widths: '80, 120, 160, 220, 320',
+                  width: settings.logo_width,
+                  height: logo_height,
+                  alt: logo_alt,
+                  loading: 'eager'
+              }}
+            </span>
+          {%- endif -%}
+          <p class="ss-brand-lockup__name">{{ section.settings.brand_name | default: shop.name | escape }}</p>
+        </div>
+
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="ss-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+
+        <h1 class="ss-hero__title">{{ section.settings.heading }}</h1>
+
+        {%- if section.settings.description != blank -%}
+          <div class="ss-hero__text rte">
+            {{ section.settings.description }}
+          </div>
+        {%- endif -%}
+
+        <div class="ss-hero__actions">
+          <a class="ss-button ss-button--primary" href="{{ cta_link }}">
+            {{ section.settings.cta_label | escape }}
+          </a>
+        </div>
+      </div>
+
+      <div class="ss-hero__media" data-ss-reveal style="--ss-delay: 0.12s;">
+        <div class="ss-hero__media-frame">
+          <span class="ss-hero__glow"></span>
+          <div class="ss-hero__image-wrap" data-ss-parallax>
+            {%- if hero_video != blank -%}
+              {{
+                hero_video
+                | video_tag:
+                  image_size: '1200x',
+                  autoplay: true,
+                  loop: true,
+                  controls: false,
+                  muted: true,
+                  playsinline: true,
+                  preload: 'metadata',
+                  class: 'ss-hero__video'
+              }}
+            {%- elsif hero_image != blank -%}
+              {{
+                hero_image
+                | image_url: width: 1440
+                | image_tag:
+                  class: 'ss-hero__image',
+                  widths: '480, 720, 960, 1200, 1440',
+                  sizes: '(min-width: 990px) 42vw, 82vw',
+                  alt: hero_alt,
+                  loading: 'eager'
+              }}
+            {%- else -%}
+              {{ 'image' | placeholder_svg_tag: 'ss-hero__image placeholder-svg' }}
+            {%- endif -%}
+          </div>
+
+          {%- if showcase_product != blank -%}
+            <div class="ss-hero__note" data-ss-reveal style="--ss-delay: 0.2s;">
+              <p class="ss-hero__note-label">{{ section.settings.product_note_label | escape }}</p>
+              <p class="ss-hero__note-title">{{ showcase_product.title | escape }}</p>
+              <p class="ss-hero__note-price">{{ showcase_price | strip }}</p>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Seventhsense Hero",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_theme_logo",
+      "label": "Show theme logo",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Brand name",
+      "default": "Seventhsense"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Premium skincare"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Minimal skincare, made to feel luxurious every day."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Elevated daily formulas with a clean finish, soft textures, and a calm visual language that lets the product speak for itself.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link"
+    },
+    {
+      "type": "video",
+      "id": "hero_video",
+      "label": "Hero video"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "product",
+      "id": "featured_product",
+      "label": "Featured product"
+    },
+    {
+      "type": "text",
+      "id": "product_note_label",
+      "label": "Product note label",
+      "default": "Signature cream"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Seventhsense Hero"
+    }
+  ]
+}
+{% endschema %}
