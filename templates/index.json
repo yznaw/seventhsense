@@ -42,10 +42,55 @@
         "padding_top": 28,
         "padding_bottom": 56
       }
+    },
+    "home_manifesto": {
+      "type": "rich-text",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Natural Self Care, Designed for Everyday Rituals",
+            "heading_size": "hxl"
+          }
+        },
+        "paragraph_one": {
+          "type": "text",
+          "settings": {
+            "text": "<p>There are moments when the world grows quieter and something within you begins to settle. The breath slows, the senses soften, and the body returns to its natural rhythm.</p>"
+          }
+        },
+        "paragraph_two": {
+          "type": "text",
+          "settings": {
+            "text": "<p>The Seventh Sense was born from that stillness. We are a Qatari organic skincare brand where care is not simply applied to the skin, but experienced through it. Nature guides every formula, allowing each ritual to restore moisture, softness, and balance in ways that feel gentle and unforced.</p>"
+          }
+        },
+        "paragraph_three": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Textures settle lightly, yet leave a lasting presence, like calm that lingers after the moment has passed.</p><p>This is not only care for the skin. It is a return to yourself.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "paragraph_one",
+        "paragraph_two",
+        "paragraph_three"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-1",
+        "full_width": false,
+        "padding_top": 24,
+        "padding_bottom": 88
+      }
     }
   },
   "order": [
     "seventhsense_hero",
-    "seventhsense_products"
+    "seventhsense_products",
+    "home_manifesto"
   ]
 }

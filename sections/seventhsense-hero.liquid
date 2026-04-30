@@ -1,18 +1,6 @@
 {%- liquid
-  assign showcase_product = section.settings.featured_product
-  if showcase_product == blank and collections.all != blank and collections.all.products_count > 0
-    assign showcase_product = collections.all.products.first
-  endif
-
   assign hero_image = section.settings.hero_image
-  if hero_image == blank and showcase_product != blank
-    assign hero_image = showcase_product.featured_image
-  endif
-
   assign hero_alt = hero_image.alt
-  if hero_alt == blank and showcase_product != blank
-    assign hero_alt = showcase_product.title
-  endif
   if hero_alt == blank
     assign hero_alt = section.settings.heading | strip_html
   endif

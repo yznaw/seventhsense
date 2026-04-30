@@ -123,6 +123,7 @@ body:not(.template-index) {
 
 body:not(.template-index) .content-for-layout {
   background: transparent;
+  z-index: 2;
 }
 
 body:not(.template-index) .page-width {
