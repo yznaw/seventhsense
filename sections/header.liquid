@@ -70,6 +70,285 @@
       padding-top: 0.5rem;
     }
   }
+
+  .ss-site-header {
+    border-bottom: 1px solid rgba(23, 19, 17, 0.07);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.68)) !important;
+    box-shadow: 0 14px 34px rgba(23, 19, 17, 0.045);
+    color: var(--ss-ink);
+    backdrop-filter: blur(20px) saturate(1.16);
+    -webkit-backdrop-filter: blur(20px) saturate(1.16);
+    transition: background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  }
+
+  .shopify-section-header-sticky .ss-site-header,
+  .scrolled-past-header .ss-site-header {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.78)) !important;
+    box-shadow: 0 18px 42px rgba(23, 19, 17, 0.08);
+  }
+
+  .ss-site-header .header {
+    max-width: 138rem;
+    min-height: 7rem;
+  }
+
+  .ss-site-header .header__heading-link {
+    color: var(--ss-ink);
+    font-family: var(--ss-font-display);
+    font-size: clamp(2.2rem, 3vw, 2.8rem);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1;
+    transition: transform 180ms ease, color 180ms ease;
+  }
+
+  .ss-site-header .header__heading-link:hover {
+    color: var(--ss-ink);
+    transform: translateY(-0.1rem);
+  }
+
+  .ss-site-header .header__heading-link .h2 {
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+  }
+
+  .ss-site-header .header__heading-logo {
+    filter: drop-shadow(0 8px 18px rgba(23, 19, 17, 0.08));
+  }
+
+  .ss-site-header .header__inline-menu {
+    margin-left: 0;
+  }
+
+  .ss-site-header .list-menu--inline {
+    gap: 0.2rem;
+    padding: 0.35rem;
+    border: 1px solid rgba(23, 19, 17, 0.08);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.56);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  }
+
+  .ss-site-header .header__menu-item {
+    min-height: 3.8rem;
+    padding: 0.9rem 1.25rem;
+    border-radius: 999px;
+    color: rgba(23, 19, 17, 0.68);
+    font-size: 1.15rem;
+    font-weight: 650;
+    letter-spacing: 0.14em;
+    line-height: 1;
+    text-transform: uppercase;
+    transition: background-color 180ms ease, color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+  }
+
+  .ss-site-header .header__menu-item:hover,
+  .ss-site-header details[open] > .header__menu-item,
+  .ss-site-header .header__active-menu-item {
+    background: rgba(255, 255, 255, 0.78);
+    color: var(--ss-ink);
+    box-shadow: inset 0 -2px 0 rgba(23, 19, 17, 0.86);
+    text-decoration: none;
+  }
+
+  .ss-site-header .header__menu-item:hover {
+    transform: translateY(-0.1rem);
+  }
+
+  .ss-site-header .header__menu-item:hover span,
+  .ss-site-header details[open] > .header__menu-item {
+    text-decoration: none;
+  }
+
+  .ss-site-header .header__menu-item .icon-caret {
+    width: 1rem;
+    margin-left: 0.6rem;
+  }
+
+  .ss-site-header .header__icons {
+    align-items: center;
+    gap: 0.45rem;
+    padding-right: 0;
+  }
+
+  .ss-site-header .header__icon,
+  .ss-site-header .header__icon--cart .icon {
+    width: 4.2rem;
+    height: 4.2rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    color: var(--ss-ink);
+    transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  }
+
+  .ss-site-header .header__icon:hover {
+    transform: translateY(-0.15rem);
+    border-color: rgba(23, 19, 17, 0.1);
+    background: rgba(255, 255, 255, 0.74);
+    box-shadow: 0 12px 26px rgba(23, 19, 17, 0.08);
+  }
+
+  .ss-site-header .header__icon .svg-wrapper {
+    width: 4.2rem;
+    height: 4.2rem;
+  }
+
+  .ss-site-header .header__icon .icon {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .ss-site-header .header__icon--cart {
+    margin-right: 0;
+  }
+
+  .ss-site-header .cart-count-bubble {
+    right: 0.1rem;
+    bottom: 0.2rem;
+    left: auto;
+    width: 1.8rem;
+    height: 1.8rem;
+    border: 0.2rem solid rgba(255, 255, 255, 0.88);
+    background: var(--ss-ink);
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .ss-site-header header-drawer {
+    margin-left: 0;
+  }
+
+  .ss-site-header .header__icon--menu {
+    color: var(--ss-ink);
+  }
+
+  .ss-site-header .menu-drawer-container.menu-opening > .header__icon--menu {
+    border-color: rgba(23, 19, 17, 0.12);
+    background: rgba(255, 255, 255, 0.68);
+    box-shadow: 0 12px 26px rgba(23, 19, 17, 0.08);
+  }
+
+  .ss-site-header .menu-drawer-container:not(.menu-opening) > .header__icon--menu,
+  .ss-site-header .menu-drawer-container:not(.menu-opening) > .header__icon--menu:hover,
+  .ss-site-header .menu-drawer-container:not(.menu-opening) > .header__icon--menu:focus,
+  .ss-site-header .menu-drawer-container:not(.menu-opening) > .header__icon--menu:focus-visible,
+  .ss-site-header .menu-drawer-container:not(.menu-opening) > .header__icon--menu.focused {
+    outline: 0;
+    outline-offset: 0;
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+    transform: none;
+  }
+
+  .ss-site-header .menu-drawer-container.menu-opening > .header__icon--menu::before {
+    background: rgba(23, 19, 17, 0.22);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .ss-site-header .search-modal {
+    min-height: 8rem;
+    border-bottom: 1px solid rgba(23, 19, 17, 0.08);
+    background:
+      radial-gradient(circle at 18% 0%, rgba(231, 223, 216, 0.58), transparent 30rem),
+      rgba(255, 255, 255, 0.92);
+    box-shadow: 0 18px 42px rgba(23, 19, 17, 0.08);
+    backdrop-filter: blur(20px) saturate(1.14);
+    -webkit-backdrop-filter: blur(20px) saturate(1.14);
+  }
+
+  .ss-site-header details[open] .modal-overlay::after {
+    background: rgba(23, 19, 17, 0.22);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .ss-site-header .search-modal__content {
+    max-width: 138rem;
+    margin: 0 auto;
+    padding: 1rem 6.4rem 1rem 1.5rem;
+  }
+
+  .ss-site-header .search-modal__form {
+    max-width: 78rem;
+  }
+
+  .ss-site-header .search-modal .field {
+    overflow: hidden;
+    border: 1px solid rgba(23, 19, 17, 0.12);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: 0 12px 28px rgba(23, 19, 17, 0.06);
+  }
+
+  .ss-site-header .search-modal .field::before,
+  .ss-site-header .search-modal .field::after {
+    content: none;
+  }
+
+  .ss-site-header .search__input.field__input {
+    min-height: 5.4rem;
+    padding-left: 2rem;
+    color: var(--ss-ink);
+    font-family: var(--ss-font-sans);
+    font-size: 1.55rem;
+  }
+
+  .ss-site-header .search-modal .field__label {
+    color: rgba(23, 19, 17, 0.5);
+    font-family: var(--ss-font-sans);
+    font-size: 1.35rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .ss-site-header .search-modal .field__button,
+  .ss-site-header .search-modal__close-button {
+    color: var(--ss-ink);
+  }
+
+  .ss-site-header .search-modal__close-button {
+    right: 1.1rem;
+    border-radius: 999px;
+    transition: background-color 180ms ease, transform 180ms ease;
+  }
+
+  .ss-site-header .search-modal__close-button:hover {
+    transform: translateY(-0.1rem);
+    background: rgba(23, 19, 17, 0.05);
+  }
+
+  @media screen and (max-width: 749px) {
+    .ss-site-header .header {
+      min-height: 7rem;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .ss-site-header .header__heading-link {
+      font-size: 2.35rem;
+    }
+
+    .ss-site-header .header__icons {
+      gap: 0.2rem;
+    }
+
+    .ss-site-header .header__icon,
+    .ss-site-header .header__icon--cart .icon,
+    .ss-site-header .header__icon .svg-wrapper {
+      width: 4rem;
+      height: 4rem;
+    }
+
+    .ss-site-header .search-modal__content {
+      padding-right: 5.8rem;
+    }
+  }
 </style>
 
 {%- style -%}
@@ -114,7 +393,7 @@
   endif
 %}
 
-<{{ header_tag }} {% if header_tag == 'sticky-header' %}data-sticky-type="{{ section.settings.sticky_header_type }}"{% endif %} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
+<{{ header_tag }} {% if header_tag == 'sticky-header' %}data-sticky-type="{{ section.settings.sticky_header_type }}"{% endif %} class="header-wrapper ss-site-header{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
   {%- liquid
     assign social_links = false
     assign localization_forms = false
@@ -127,8 +406,13 @@
       assign localization_forms = true
     endif
   -%}
-  <header class="header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if localization_forms %} header--has-localizations{% endif %}">
+  <header class="header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if localization_forms %} header--has-localizations{% endif %}">
     {%- liquid
+      assign header_logo = settings.logo
+      if header_logo == blank and shop.brand.logo != blank
+        assign header_logo = shop.brand.logo
+      endif
+
       if section.settings.menu != blank
         render 'header-drawer'
       endif
@@ -143,13 +427,14 @@
         <h1 class="header__heading">
       {%- endif -%}
           <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-            {%- if settings.logo != blank -%}
+            {%- if header_logo != blank -%}
               <div class="header__heading-logo-wrapper">
-                {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-                {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+                {%- assign logo_alt = header_logo.alt | default: shop.name | escape -%}
+                {%- assign logo_aspect_ratio = header_logo.aspect_ratio | default: 1 -%}
+                {%- assign logo_height = settings.logo_width | divided_by: logo_aspect_ratio -%}
                 {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
                 {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-                {{ settings.logo | image_url: width: 600 | image_tag:
+                {{ header_logo | image_url: width: 600 | image_tag:
                   class: 'header__heading-logo motion-reduce',
                   widths: widths,
                   height: logo_height,
@@ -160,7 +445,7 @@
                 }}
               </div>
             {%- else -%}
-              <span class="h2">{{ shop.name }}</span>
+              <span class="visually-hidden">{{ shop.name }}</span>
             {%- endif -%}
           </a>
       {%- if request.page_type == 'index' -%}
@@ -183,13 +468,14 @@
         <h1 class="header__heading">
       {%- endif -%}
           <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-            {%- if settings.logo != blank -%}
+            {%- if header_logo != blank -%}
               <div class="header__heading-logo-wrapper">
-                {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-                {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+                {%- assign logo_alt = header_logo.alt | default: shop.name | escape -%}
+                {%- assign logo_aspect_ratio = header_logo.aspect_ratio | default: 1 -%}
+                {%- assign logo_height = settings.logo_width | divided_by: logo_aspect_ratio -%}
                 {% capture sizes %}(min-width: 750px) {{ settings.logo_width }}px, 50vw{% endcapture %}
                 {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
-                {{ settings.logo | image_url: width: 600 | image_tag:
+                {{ header_logo | image_url: width: 600 | image_tag:
                   class: 'header__heading-logo',
                   widths: widths,
                   height: logo_height,
@@ -200,7 +486,7 @@
                 }}
               </div>
             {%- else -%}
-              <span class="h2">{{ shop.name }}</span>
+              <span class="visually-hidden">{{ shop.name }}</span>
             {%- endif -%}
           </a>
       {%- if request.page_type == 'index' -%}
@@ -233,35 +519,6 @@
         {%- endif -%}
       </div>
       {% render 'header-search', input_id: 'Search-In-Modal' %}
-
-      {%- if shop.customer_accounts_enabled -%}
-        <a
-          href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
-          class="header__icon header__icon--account link focus-inset{% if section.settings.menu != blank %} small-hide{% endif %}"
-          rel="nofollow"
-        >
-          {%- if section.settings.enable_customer_avatar -%}
-            <account-icon>
-              {%- if customer and customer.has_avatar? -%}
-                {{ customer | avatar }}
-              {%- else -%}
-                <span class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
-              {%- endif -%}
-            </account-icon>
-          {%- else -%}
-            <span class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
-          {%- endif -%}
-          <span class="visually-hidden">
-            {%- liquid
-              if customer
-                echo 'customer.account_fallback' | t
-              else
-                echo 'customer.log_in' | t
-              endif
-            -%}
-          </span>
-        </a>
-      {%- endif -%}
 
       {%- for block in section.blocks -%}
         {%- case block.type -%}

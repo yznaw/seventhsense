@@ -1,6 +1,6 @@
 <product-info
   id="MainProduct-{{ section.id }}"
-  class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}"
+  class="ss-product-page section-{{ section.id }}-padding"
   data-section="{{ section.id }}"
   data-product-id="{{ product.id }}"
   data-update-url="true"
@@ -73,12 +73,12 @@
   {%- endif -%}
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
-  <div class="page-width">
-    <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
-      <div class="grid__item product__media-wrapper">
+  <div class="page-width ss-product-page__inner">
+    <div class="product ss-product-page__layout product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
+      <div class="grid__item product__media-wrapper ss-product-page__media" data-ss-reveal data-ss-tilt>
         {% render 'product-media-gallery', variant_images: variant_images %}
       </div>
-      <div class="product__info-wrapper grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <div class="product__info-wrapper ss-product-page__info grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" data-ss-reveal style="--ss-delay: 120ms;">
         <section
           id="ProductInfo-{{ section.id }}"
           class="product__info-container{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %}"
@@ -98,6 +98,9 @@
                 </p>
               {%- when 'title' -%}
                 <div class="product__title" {{ block.shopify_attributes }}>
+                  {%- if product.vendor != blank -%}
+                    <p class="ss-product-page__eyebrow">{{ product.vendor | escape }}</p>
+                  {%- endif -%}
                   <h1>{{ product.title | escape }}</h1>
                   <a href="{{ product.url }}" class="product__title">
                     <h2 class="h1">
@@ -478,13 +481,7 @@
               {%- when 'variant_picker' -%}
                 {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
               {%- when 'buy_buttons' -%}
-                {%- render 'buy-buttons',
-                  block: block,
-                  product: product,
-                  product_form_id: product_form_id,
-                  section_id: section.id,
-                  show_pickup_availability: true
-                -%}
+                {%- assign ss_product_buy_buttons_block = block -%}
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
                   <div class="rating-wrapper">
@@ -683,6 +680,54 @@
         </section>
       </div>
     </div>
+
+    {%- if ss_product_buy_buttons_block != blank -%}
+      <div class="ss-product-floating-form" data-ss-product-floating-form>
+        {%- render 'buy-buttons',
+          block: ss_product_buy_buttons_block,
+          product: product,
+          product_form_id: product_form_id,
+          section_id: section.id,
+          show_pickup_availability: false
+        -%}
+      </div>
+      <script>
+        (() => {
+          const root = document.documentElement;
+          const productDock = document.querySelector('.ss-product-purchase-dock');
+          const productPage = productDock?.closest('.ss-product-page');
+          const syncProductDockViewport = () => {
+            const viewportHeight = Math.max(
+              window.visualViewport?.height || 0,
+              window.innerHeight || 0,
+              document.documentElement.clientHeight || 0,
+              1
+            );
+            const scaledViewportHeight =
+              viewportHeight < 420 ? viewportHeight * (window.devicePixelRatio || 1) : viewportHeight;
+            const shellViewportHeight =
+              viewportHeight < 420 && window.outerHeight > viewportHeight * 1.4 && window.outerHeight < 900
+                ? window.outerHeight
+                : 0;
+
+            root.style.setProperty(
+              '--ss-visual-vh',
+              `${Math.max(viewportHeight, scaledViewportHeight, shellViewportHeight)}px`
+            );
+
+            const pageTop = productPage ? productPage.getBoundingClientRect().top + (window.scrollY || 0) : 0;
+            const scrollY = (window.scrollY || window.pageYOffset || 0) - pageTop;
+            root.style.setProperty('--ss-product-scroll-y', `${scrollY}px`);
+          };
+
+          syncProductDockViewport();
+          window.addEventListener('scroll', syncProductDockViewport, { passive: true });
+          window.addEventListener('resize', syncProductDockViewport);
+          window.visualViewport?.addEventListener('resize', syncProductDockViewport);
+          window.visualViewport?.addEventListener('scroll', syncProductDockViewport);
+        })();
+      </script>
+    {%- endif -%}
 
     {% render 'product-media-modal', variant_images: variant_images %}
 

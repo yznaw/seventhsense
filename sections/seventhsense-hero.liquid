@@ -17,31 +17,25 @@
     assign hero_alt = section.settings.heading | strip_html
   endif
 
-  assign cta_link = section.settings.cta_link | default: routes.all_products_collection_url
+  assign cta_link = section.settings.cta_link | default: '#ss-featured-products'
   assign hero_video = section.settings.hero_video
+  assign navigation_menu = section.settings.navigation_menu
+  assign theme_logo = settings.logo
+  if theme_logo == blank and shop.brand.logo != blank
+    assign theme_logo = shop.brand.logo
+  endif
 
-  capture showcase_price
-    if showcase_product != blank
-      if showcase_product.price_varies
-        echo showcase_product.price_min | money
-        echo ' - '
-        echo showcase_product.price_max | money
-      else
-        echo showcase_product.price | money
-      endif
-    endif
-  endcapture
 -%}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
-    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-top: 0;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
 
   @media screen and (min-width: 750px) {
     .section-{{ section.id }}-padding {
-      padding-top: {{ section.settings.padding_top }}px;
+      padding-top: 0;
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
@@ -49,15 +43,136 @@
 
 <section class="ss-section ss-shell ss-hero-section section-{{ section.id }}-padding">
   <div class="page-width">
+    {%- if section.settings.floating_logo != blank or theme_logo != blank or section.settings.logo_image_url != blank -%}
+      <a href="{{ routes.root_url }}" class="ss-floating-logo" aria-label="{{ shop.name | escape }}">
+      {%- if section.settings.floating_logo != blank -%}
+        {{
+          section.settings.floating_logo
+          | image_url: width: 360
+          | image_tag:
+            widths: '120, 180, 240, 300, 360',
+            width: 240,
+            alt: section.settings.brand_name | default: shop.name,
+            loading: 'eager'
+        }}
+      {%- elsif theme_logo != blank -%}
+        {%- assign floating_logo_alt = theme_logo.alt | default: shop.name | escape -%}
+        {%- assign floating_logo_aspect_ratio = theme_logo.aspect_ratio | default: 1 -%}
+        {%- assign floating_logo_height = 240 | divided_by: floating_logo_aspect_ratio -%}
+        {{
+          theme_logo
+          | image_url: width: 360
+          | image_tag:
+            widths: '120, 180, 240, 300, 360',
+            width: 240,
+            height: floating_logo_height,
+            alt: floating_logo_alt,
+            loading: 'eager'
+        }}
+      {%- elsif section.settings.logo_image_url != blank -%}
+        <img
+          src="{{ section.settings.logo_image_url | escape }}"
+          alt="{{ section.settings.brand_name | default: shop.name | escape }}"
+          width="240"
+          height="120"
+          loading="eager"
+        >
+      {%- endif -%}
+      </a>
+    {%- endif -%}
+
+    {%- if section.settings.show_language_toggle and localization.available_languages.size > 1 -%}
+      {%- liquid
+        assign ss_toggle_locale_code = ''
+        assign ss_toggle_locale_label = ''
+
+        for language in localization.available_languages
+          assign language_code = language.iso_code | slice: 0, 2 | upcase
+
+          if language.iso_code != localization.language.iso_code
+            if language_code == 'AR' or language_code == 'EN'
+              assign ss_toggle_locale_code = language.iso_code
+              assign ss_toggle_locale_label = language_code
+              break
+            endif
+          endif
+        endfor
+      -%}
+      {%- form 'localization', id: 'SeventhsenseLanguageForm', class: 'ss-language-toggle' -%}
+        <span class="visually-hidden">{{ 'localization.language_label' | t }}</span>
+        {%- if ss_toggle_locale_code != blank -%}
+          <button
+            type="submit"
+            name="locale_code"
+            value="{{ ss_toggle_locale_code }}"
+            class="ss-language-toggle__button is-active"
+            lang="{{ ss_toggle_locale_code }}"
+          >
+            {{ ss_toggle_locale_label }}
+          </button>
+        {%- endif -%}
+      {%- endform -%}
+    {%- endif -%}
+
+    <a href="{{ routes.cart_url }}" class="ss-floating-cart" aria-label="{{ 'templates.cart.cart' | t }}">
+      <span class="ss-floating-cart__icon" aria-hidden="true">
+        {%- if cart == empty -%}
+          {{ 'icon-cart-empty.svg' | inline_asset_content }}
+        {%- else -%}
+          {{ 'icon-cart.svg' | inline_asset_content }}
+        {%- endif -%}
+      </span>
+      {%- if cart != empty -%}
+        <span class="ss-floating-cart__count" aria-hidden="true">
+          {%- if cart.item_count < 100 -%}
+            {{ cart.item_count }}
+          {%- else -%}
+            99+
+          {%- endif -%}
+        </span>
+      {%- endif -%}
+    </a>
+
+    {%- if navigation_menu != blank -%}
+      <nav class="ss-floating-tabs" aria-label="Primary navigation" data-ss-reveal>
+        <ul class="ss-floating-tabs__list">
+          {%- for link in navigation_menu.links -%}
+            {%- liquid
+              assign tab_url = link.url
+              assign tab_title = link.title | downcase
+              assign catalog_url = '#ss-featured-products'
+              unless request.page_type == 'index'
+                assign catalog_url = routes.root_url | append: '#ss-featured-products'
+              endunless
+
+              if section.settings.route_catalog_tabs_to_catalog and tab_title contains 'catalog'
+                assign tab_url = catalog_url
+              elsif section.settings.route_catalog_tabs_to_catalog and tab_title contains 'shop'
+                assign tab_url = catalog_url
+              elsif section.settings.route_catalog_tabs_to_catalog and tab_title contains 'product'
+                assign tab_url = catalog_url
+              endif
+            -%}
+            <li>
+              <a href="{{ tab_url }}" class="ss-floating-tabs__link{% if link.current or tab_url == '#ss-featured-products' %} is-active{% endif %}">
+                {{ link.title | escape }}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+
     <div class="ss-hero">
       <div class="ss-hero__content" data-ss-reveal>
         <div class="ss-brand-lockup">
-          {%- if section.settings.show_theme_logo and settings.logo != blank -%}
+          {%- if section.settings.show_theme_logo and theme_logo != blank -%}
             <span class="ss-brand-lockup__logo">
-              {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
-              {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+              {%- assign logo_alt = theme_logo.alt | default: shop.name | escape -%}
+              {%- assign logo_aspect_ratio = theme_logo.aspect_ratio | default: 1 -%}
+              {%- assign logo_height = settings.logo_width | divided_by: logo_aspect_ratio -%}
               {{
-                settings.logo
+                theme_logo
                 | image_url: width: 320
                 | image_tag:
                   widths: '80, 120, 160, 220, 320',
@@ -92,7 +207,6 @@
 
       <div class="ss-hero__media" data-ss-reveal style="--ss-delay: 0.12s;">
         <div class="ss-hero__media-frame">
-          <span class="ss-hero__glow"></span>
           <div class="ss-hero__image-wrap" data-ss-parallax>
             {%- if hero_video != blank -%}
               {{
@@ -122,14 +236,6 @@
               {{ 'image' | placeholder_svg_tag: 'ss-hero__image placeholder-svg' }}
             {%- endif -%}
           </div>
-
-          {%- if showcase_product != blank -%}
-            <div class="ss-hero__note" data-ss-reveal style="--ss-delay: 0.2s;">
-              <p class="ss-hero__note-label">{{ section.settings.product_note_label | escape }}</p>
-              <p class="ss-hero__note-title">{{ showcase_product.title | escape }}</p>
-              <p class="ss-hero__note-price">{{ showcase_price | strip }}</p>
-            </div>
-          {%- endif -%}
         </div>
       </div>
     </div>
@@ -140,6 +246,34 @@
 {
   "name": "Seventhsense Hero",
   "settings": [
+    {
+      "type": "link_list",
+      "id": "navigation_menu",
+      "label": "Navigation menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "route_catalog_tabs_to_catalog",
+      "label": "Route Catalog, Shop, and Products tabs to homepage catalog",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_language_toggle",
+      "label": "Show AR / EN language toggle",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "floating_logo",
+      "label": "Top-left logo image"
+    },
+    {
+      "type": "text",
+      "id": "logo_image_url",
+      "label": "Fallback logo image URL"
+    },
     {
       "type": "checkbox",
       "id": "show_theme_logo",
@@ -162,13 +296,13 @@
       "type": "inline_richtext",
       "id": "heading",
       "label": "Heading",
-      "default": "Minimal skincare, made to feel luxurious every day."
+      "default": "Natural Self Care, Designed for Everyday Rituals"
     },
     {
       "type": "richtext",
       "id": "description",
       "label": "Description",
-      "default": "<p>Elevated daily formulas with a clean finish, soft textures, and a calm visual language that lets the product speak for itself.</p>"
+      "default": "<p>There are moments when the world grows quieter and something within you begins to settle. The breath slows, the senses soften, and the body returns to its natural rhythm.</p>"
     },
     {
       "type": "text",
@@ -214,7 +348,7 @@
       "step": 4,
       "unit": "px",
       "label": "Top padding",
-      "default": 20
+      "default": 0
     },
     {
       "type": "range",

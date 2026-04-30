@@ -28,3 +28,140 @@
   width: 10rem;
   padding: 0.5rem;
 }
+
+.ss-site-header .header__submenu.list-menu--disclosure {
+  top: calc(100% + 1rem);
+  left: 50%;
+  min-width: 24rem;
+  width: max-content;
+  max-width: min(36rem, calc(100vw - 4rem));
+  padding: 0.8rem;
+  border: 1px solid rgba(23, 19, 17, 0.1);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(231, 223, 216, 0.62), transparent 26rem),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(250, 247, 244, 0.94));
+  box-shadow: 0 24px 70px rgba(23, 19, 17, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.68);
+  transform: translate(-50%, -0.8rem);
+  backdrop-filter: blur(22px) saturate(1.16);
+  -webkit-backdrop-filter: blur(22px) saturate(1.16);
+}
+
+.ss-site-header details[open] > .header__submenu.list-menu--disclosure {
+  animation: ss-dropdown-in 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ss-site-header .header__submenu.list-menu--disclosure::before {
+  content: '';
+  position: absolute;
+  top: -0.65rem;
+  left: 50%;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-top: 1px solid rgba(23, 19, 17, 0.1);
+  border-left: 1px solid rgba(23, 19, 17, 0.1);
+  background: rgba(255, 255, 255, 0.94);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.ss-site-header .header__submenu.list-menu--disclosure > li + li {
+  margin-top: 0.35rem;
+}
+
+.ss-site-header .header__submenu .header__menu-item {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  min-width: 20rem;
+  min-height: 4.8rem;
+  padding: 1.2rem 1.25rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.34);
+  box-shadow: none;
+  color: rgba(23, 19, 17, 0.72);
+  font-family: var(--ss-font-sans);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.ss-site-header .header__submenu .header__menu-item::after {
+  content: '';
+  width: 0.7rem;
+  height: 0.7rem;
+  margin-left: 1.6rem;
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  opacity: 0.46;
+  transform: rotate(45deg);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.ss-site-header .header__submenu summary.header__menu-item::after {
+  transform: rotate(135deg);
+}
+
+.ss-site-header .header__submenu .header__menu-item:hover,
+.ss-site-header .header__submenu .header__menu-item:focus,
+.ss-site-header .header__submenu .header__menu-item.list-menu__item--active,
+.ss-site-header .header__submenu details[open] > summary.header__menu-item {
+  border-color: rgba(23, 19, 17, 0.1);
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 12px 28px rgba(23, 19, 17, 0.08);
+  color: var(--ss-ink);
+  text-decoration: none;
+  transform: translateX(0.25rem);
+}
+
+.ss-site-header .header__submenu .header__menu-item:hover::after,
+.ss-site-header .header__submenu .header__menu-item:focus::after,
+.ss-site-header .header__submenu .header__menu-item.list-menu__item--active::after {
+  opacity: 1;
+  transform: translateX(0.15rem) rotate(45deg);
+}
+
+.ss-site-header .header__submenu summary.header__menu-item:hover::after,
+.ss-site-header .header__submenu summary.header__menu-item:focus::after {
+  transform: translateY(0.12rem) rotate(135deg);
+}
+
+.ss-site-header .header__submenu .header__submenu {
+  position: static;
+  display: grid;
+  gap: 0.35rem;
+  margin: 0.35rem 0 0;
+  padding: 0.55rem 0 0.2rem 1rem;
+  border-left: 1px solid rgba(23, 19, 17, 0.1);
+}
+
+.ss-site-header .header__submenu .header__submenu .header__menu-item {
+  min-height: 4.2rem;
+  font-size: 1.12rem;
+  letter-spacing: 0.12em;
+}
+
+@keyframes ss-dropdown-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -1.2rem);
+    filter: blur(0.45rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+    filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ss-site-header details[open] > .header__submenu.list-menu--disclosure {
+    animation: none;
+  }
+}

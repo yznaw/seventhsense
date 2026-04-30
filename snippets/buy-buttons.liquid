@@ -60,7 +60,7 @@
           {%- render 'gift-card-recipient-form', product: product, form: form, section: section -%}
         {%- endif -%}
 
-        <div class="product-form__buttons">
+        <div class="product-form__buttons ss-product-purchase-dock">
           {%- liquid
             assign check_against_inventory = true
             if product.selected_or_first_available_variant.inventory_management != 'shopify' or product.selected_or_first_available_variant.inventory_policy == 'continue'
@@ -101,7 +101,7 @@
     </product-form>
   {%- else -%}
     <div class="product-form">
-      <div class="product-form__buttons form">
+      <div class="product-form__buttons ss-product-purchase-dock form">
         <button
           type="submit"
           name="add"

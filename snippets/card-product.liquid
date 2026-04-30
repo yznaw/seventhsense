@@ -39,6 +39,16 @@
     if ratio == 0 or ratio == null
       assign ratio = 1
     endif
+    assign ss_card_variant = card_product.selected_or_first_available_variant
+    assign ss_card_form_id = 'ss-floating-card-' | append: section_id | append: '-' | append: card_product.id
+    assign ss_card_qty_rules = false
+    if ss_card_variant.quantity_rule.min > 1 or ss_card_variant.quantity_rule.max != null or ss_card_variant.quantity_rule.increment > 1
+      assign ss_card_qty_rules = true
+    endif
+    assign ss_card_direct_purchase = false
+    if card_product.variants_count == 1 and ss_card_variant.available and ss_card_qty_rules == false
+      assign ss_card_direct_purchase = true
+    endif
   -%}
   <div class="card-wrapper product-card-wrapper underline-links-hover">
     <div
@@ -141,6 +151,73 @@
               </span>
             {%- endif -%}
           </div>
+        </div>
+        <div class="ss-card-floating-actions" aria-label="Quick actions for {{ card_product.title | escape }}">
+          {%- if ss_card_direct_purchase -%}
+            <product-form class="ss-card-floating-actions__product-form" data-section-id="{{ section.id }}">
+              {%- form 'product',
+                card_product,
+                id: ss_card_form_id,
+                class: 'ss-card-floating-actions__form',
+                novalidate: 'novalidate',
+                data-type: 'add-to-cart-form'
+              -%}
+                <input
+                  type="hidden"
+                  name="id"
+                  value="{{ ss_card_variant.id }}"
+                  class="product-variant-id"
+                >
+                <button
+                  type="submit"
+                  name="add"
+                  class="ss-card-floating-actions__button ss-card-floating-actions__button--cart"
+                  aria-live="polite"
+                >
+                  <span>{{ 'products.product.add_to_cart' | t }}</span>
+                  {%- render 'loading-spinner' -%}
+                </button>
+              {%- endform -%}
+            </product-form>
+            <form
+              method="post"
+              action="{{ routes.cart_add_url }}"
+              class="ss-card-floating-actions__form ss-card-floating-actions__form--buy"
+              data-ss-buy-now
+            >
+              <input
+                type="hidden"
+                name="id"
+                value="{{ ss_card_variant.id }}"
+              >
+              <input
+                type="hidden"
+                name="quantity"
+                value="1"
+              >
+              <button
+                type="submit"
+                class="ss-card-floating-actions__button ss-card-floating-actions__button--buy"
+                data-ss-buy-now-label
+              >
+                Buy now
+              </button>
+            </form>
+          {%- elsif card_product.available -%}
+            <a class="ss-card-floating-actions__button ss-card-floating-actions__button--cart" href="{{ card_product.url }}">
+              {{ 'products.product.choose_options' | t }}
+            </a>
+            <a class="ss-card-floating-actions__button ss-card-floating-actions__button--buy" href="{{ card_product.url }}">
+              Buy now
+            </a>
+          {%- else -%}
+            <button class="ss-card-floating-actions__button ss-card-floating-actions__button--cart" type="button" disabled>
+              <span>{{ 'products.product.sold_out' | t }}</span>
+            </button>
+            <a class="ss-card-floating-actions__button ss-card-floating-actions__button--buy" href="{{ card_product.url }}">
+              Details
+            </a>
+          {%- endif -%}
         </div>
       </div>
       <div class="card__content">

@@ -1,10 +1,14 @@
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 {{ 'section-collection-list.css' | asset_url | stylesheet_tag }}
 
-<div class="page-width">
-  <h1 class="title title--primary inline-richtext{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+<div class="ss-list-collections page-width">
+  <p class="ss-list-collections__eyebrow">Seventh Sense catalog</p>
+  <h1 class="title title--primary inline-richtext{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}" data-ss-reveal>
     {{ section.settings.title }}
   </h1>
+  <p class="ss-list-collections__intro" data-ss-reveal style="--ss-delay: 90ms;">
+    Explore the rituals, collections, and essentials in one calm place.
+  </p>
   {%- liquid
     case section.settings.sort
       when 'products_high', 'products_low'
@@ -31,9 +35,10 @@
       {%- for collection in collections -%}
         <li
           class="collection-list__item grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          data-ss-reveal
           {% if settings.animations_reveal_on_scroll %}
             data-cascade
-            style="--animation-order: {{ forloop.index }};"
+            style="--animation-order: {{ forloop.index }}; --ss-delay: {{ forloop.index | times: 70 }}ms;"
           {% endif %}
         >
           {% render 'card-collection',

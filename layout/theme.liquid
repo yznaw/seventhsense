@@ -1,5 +1,12 @@
+{%- liquid
+  assign locale_code = request.locale.iso_code | downcase
+  assign text_direction = 'ltr'
+  if locale_code contains 'ar' or locale_code contains 'he' or locale_code contains 'fa' or locale_code contains 'ur'
+    assign text_direction = 'rtl'
+  endif
+-%}
 <!doctype html>
-<html class="js" lang="{{ request.locale.iso_code }}">
+<html class="js" lang="{{ request.locale.iso_code }}" dir="{{ text_direction }}">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -299,7 +306,7 @@
     </script>
   </head>
 
-  <body class="gradient template-{{ request.page_type | handle }}{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+  <body class="template-{{ request.page_type | handle }}{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>

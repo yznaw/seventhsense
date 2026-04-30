@@ -12,71 +12,128 @@
   }
 {%- endstyle -%}
 
+{%- liquid
+  assign catalog_collection = section.settings.collection
+  if catalog_collection == blank
+    assign catalog_collection = collections.all
+  endif
+
+  assign products_to_show = section.settings.products_to_show
+-%}
+
 <section id="ss-featured-products" class="ss-section ss-products-section section-{{ section.id }}-padding">
   <div class="page-width">
-    <div class="ss-section__header" data-ss-reveal>
+    <div class="ss-section__header ss-products__header" data-ss-reveal>
       {%- if section.settings.kicker != blank -%}
         <p class="ss-section__kicker">{{ section.settings.kicker | escape }}</p>
       {%- endif -%}
+
       <h2>{{ section.settings.heading }}</h2>
+
       {%- if section.settings.description != blank -%}
         <p class="ss-section__description">{{ section.settings.description }}</p>
       {%- endif -%}
     </div>
 
-    {%- if section.settings.collection != blank and section.settings.collection.products_count > 0 -%}
-      <div class="ss-product-grid">
-        {%- for product in section.settings.collection.products limit: 4 -%}
-          <article class="ss-product-card" data-ss-reveal style="--ss-delay: {{ forloop.index0 | times: 0.08 }}s;">
-            <a class="ss-product-card__image-link" href="{{ product.url }}">
-              {%- if product.featured_image != blank -%}
+    {%- if catalog_collection != blank and catalog_collection.products_count > 0 -%}
+      <div class="ss-product-showcase" aria-label="{{ catalog_collection.title | escape }}">
+        {%- for product in catalog_collection.products limit: products_to_show -%}
+          {%- liquid
+            assign current_variant = product.selected_or_first_available_variant
+            assign card_image = product.featured_media.preview_image | default: product.featured_image
+
+            assign ss_home_qty_rules = false
+            if current_variant.quantity_rule.min > 1 or current_variant.quantity_rule.max != null or current_variant.quantity_rule.increment > 1
+              assign ss_home_qty_rules = true
+            endif
+
+            assign ss_home_direct_purchase = false
+            if product.variants_count == 1 and current_variant.available and ss_home_qty_rules == false
+              assign ss_home_direct_purchase = true
+            endif
+          -%}
+
+          <article class="ss-product-ritual-card" data-ss-reveal data-ss-tilt style="--ss-delay: {{ forloop.index0 | times: 0.08 }}s;">
+            <a class="ss-product-ritual-card__media" href="{{ product.url }}" aria-label="View {{ product.title | escape }}">
+              {%- if card_image != blank -%}
                 {{
-                  product.featured_image
-                  | image_url: width: 900
+                  card_image
+                  | image_url: width: 1200
                   | image_tag:
-                    class: 'ss-product-card__image',
-                    widths: '320, 420, 560, 720, 900',
-                    sizes: '(min-width: 1200px) 24vw, (min-width: 750px) 48vw, 92vw',
-                    alt: product.featured_image.alt | default: product.title,
+                    class: 'ss-product-ritual-card__image',
+                    widths: '360, 520, 720, 900, 1200',
+                    sizes: '(min-width: 1200px) 31vw, (min-width: 750px) 48vw, 50vw',
+                    alt: card_image.alt | default: product.title,
                     loading: 'lazy'
                 }}
               {%- else -%}
-                {{ 'image' | placeholder_svg_tag: 'ss-product-card__image placeholder-svg' }}
+                {{ 'product-1' | placeholder_svg_tag: 'ss-product-ritual-card__image placeholder-svg' }}
               {%- endif -%}
             </a>
 
-            <div class="ss-product-card__content">
-              <h3 class="ss-product-card__title">
+            <div class="ss-product-ritual-card__overlay">
+              <h3>
                 <a href="{{ product.url }}">{{ product.title | escape }}</a>
               </h3>
 
-              <p class="ss-product-card__price">
+              <p class="ss-product-ritual-card__price">
                 {%- if product.price_varies -%}
                   {{ product.price_min | money }} - {{ product.price_max | money }}
                 {%- else -%}
                   {{ product.price | money }}
                 {%- endif -%}
               </p>
+            </div>
 
-              {%- if section.settings.show_description -%}
-                <p class="ss-product-card__description">
-                  {{ product.description | strip_html | truncatewords: 18 }}
-                </p>
+            <div class="ss-product-ritual-card__actions" aria-label="Quick actions for {{ product.title | escape }}">
+              {%- if ss_home_direct_purchase -%}
+                <form method="post" action="{{ routes.cart_add_url }}" class="ss-product-buy ss-product-buy--floating" data-ss-add-to-cart>
+                  <input type="hidden" name="id" value="{{ current_variant.id }}">
+                  <input type="hidden" name="quantity" value="1">
+                  <button type="submit" class="ss-button ss-button--primary ss-product-buy__button" data-ss-add-label>
+                    Add to cart
+                  </button>
+                </form>
+                <form method="post" action="{{ routes.cart_add_url }}" class="ss-product-buy ss-product-buy--quick-checkout" data-ss-buy-now>
+                  <input type="hidden" name="id" value="{{ current_variant.id }}">
+                  <input type="hidden" name="quantity" value="1">
+                  <button type="submit" class="ss-product-buy__quick-link ss-product-buy__quick-link--checkout" data-ss-buy-now-label>
+                    Buy now
+                  </button>
+                </form>
+              {%- elsif product.available -%}
+                <a class="ss-product-buy__quick-link" href="{{ product.url }}">Choose options</a>
+                <a class="ss-product-buy__quick-link ss-product-buy__quick-link--checkout" href="{{ product.url }}">Buy now</a>
+              {%- else -%}
+                <button type="button" class="ss-product-buy__quick-link ss-product-buy__quick-link--disabled" disabled>Sold out</button>
+                <a class="ss-product-buy__quick-link ss-product-buy__quick-link--checkout" href="{{ product.url }}">Details</a>
               {%- endif -%}
-
-              <div class="ss-product-card__cta">
-                <a class="ss-button ss-button--secondary" href="{{ product.url }}">
-                  {{ section.settings.button_label | escape }}
-                </a>
-              </div>
             </div>
           </article>
         {%- endfor -%}
       </div>
     {%- else -%}
-      <div class="ss-empty-grid">
-        {%- for i in (1..4) -%}
-          <div class="ss-empty-card" data-ss-reveal style="--ss-delay: {{ forloop.index0 | times: 0.08 }}s;"></div>
+      <div class="ss-product-showcase">
+        {%- for i in (1..3) -%}
+          <article class="ss-product-ritual-card" data-ss-reveal style="--ss-delay: {{ forloop.index0 | times: 0.08 }}s;">
+            <div class="ss-product-ritual-card__media">
+              {{ 'product-1' | placeholder_svg_tag: 'ss-product-ritual-card__image placeholder-svg' }}
+            </div>
+            <div class="ss-product-ritual-card__content">
+              <div class="ss-product-ritual-card__eyebrow">
+                <span>Shopify product</span>
+                <span>Catalog</span>
+              </div>
+              <h3>Connect a collection</h3>
+              <p class="ss-product-ritual-card__description">
+                Choose a Shopify collection in this section to populate the catalog from your product admin.
+              </p>
+              <div class="ss-product-buy ss-product-buy--unavailable">
+                <button type="button" class="ss-button ss-button--secondary" disabled>Add to cart</button>
+                <p class="ss-product-buy__status">Products will appear here once a collection is selected.</p>
+              </div>
+            </div>
+          </article>
         {%- endfor -%}
       </div>
     {%- endif -%}
@@ -91,24 +148,33 @@
       "type": "text",
       "id": "kicker",
       "label": "Kicker",
-      "default": "Curated essentials"
+      "default": "Body care rituals"
     },
     {
       "type": "inline_richtext",
       "id": "heading",
       "label": "Heading",
-      "default": "Four formulas designed for a clean, premium routine."
+      "default": "Shop the catalog"
     },
     {
       "type": "textarea",
       "id": "description",
       "label": "Description",
-      "default": "Feature your best four products with refined product cards, gentle motion, and clear links into each product page."
+      "default": "Browse products managed in Shopify and add your ritual essentials to cart."
     },
     {
       "type": "collection",
       "id": "collection",
       "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 3,
+      "max": 24,
+      "step": 1,
+      "label": "Products to show",
+      "default": 12
     },
     {
       "type": "checkbox",
@@ -117,10 +183,10 @@
       "default": true
     },
     {
-      "type": "text",
-      "id": "button_label",
-      "label": "Button label",
-      "default": "View Product"
+      "type": "checkbox",
+      "id": "show_quick_details",
+      "label": "Show expandable product details",
+      "default": true
     },
     {
       "type": "header",
@@ -144,7 +210,7 @@
       "step": 4,
       "unit": "px",
       "label": "Bottom padding",
-      "default": 44
+      "default": 56
     }
   ],
   "presets": [
