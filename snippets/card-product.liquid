@@ -41,6 +41,7 @@
     endif
     assign ss_card_variant = card_product.selected_or_first_available_variant
     assign ss_card_form_id = 'ss-floating-card-' | append: section_id | append: '-' | append: card_product.id
+    assign ss_card_mobile_form_id = 'ss-mobile-card-' | append: section_id | append: '-' | append: card_product.id
     assign ss_card_qty_rules = false
     if ss_card_variant.quantity_rule.min > 1 or ss_card_variant.quantity_rule.max != null or ss_card_variant.quantity_rule.increment > 1
       assign ss_card_qty_rules = true
@@ -50,7 +51,7 @@
       assign ss_card_direct_purchase = true
     endif
   -%}
-  <div class="card-wrapper product-card-wrapper underline-links-hover">
+  <div class="card-wrapper product-card-wrapper ss-unified-product-card underline-links-hover">
     <div
       class="
         card card--{{ settings.card_style }}
@@ -365,6 +366,73 @@
             {%- endif -%}
           </div>
         </div>
+        <div class="ss-card-mobile-actions" aria-label="Mobile quick actions for {{ card_product.title | escape }}">
+          {%- if ss_card_direct_purchase -%}
+            <form
+              method="post"
+              action="{{ routes.cart_add_url }}"
+              id="{{ ss_card_mobile_form_id }}"
+              class="ss-card-mobile-actions__form ss-card-mobile-actions__form--cart"
+              data-ss-add-to-cart
+            >
+              <input
+                type="hidden"
+                name="id"
+                value="{{ ss_card_variant.id }}"
+              >
+              <input
+                type="hidden"
+                name="quantity"
+                value="1"
+              >
+              <button
+                type="submit"
+                class="ss-card-mobile-actions__button ss-card-mobile-actions__button--cart"
+                data-ss-add-label
+              >
+                Add to cart
+              </button>
+            </form>
+            <form
+              method="post"
+              action="{{ routes.cart_add_url }}"
+              class="ss-card-mobile-actions__form ss-card-mobile-actions__form--buy"
+              data-ss-buy-now
+            >
+              <input
+                type="hidden"
+                name="id"
+                value="{{ ss_card_variant.id }}"
+              >
+              <input
+                type="hidden"
+                name="quantity"
+                value="1"
+              >
+              <button
+                type="submit"
+                class="ss-card-mobile-actions__button ss-card-mobile-actions__button--buy"
+                data-ss-buy-now-label
+              >
+                Buy now
+              </button>
+            </form>
+          {%- elsif card_product.available -%}
+            <a class="ss-card-mobile-actions__button ss-card-mobile-actions__button--cart" href="{{ card_product.url }}">
+              {{ 'products.product.choose_options' | t }}
+            </a>
+            <a class="ss-card-mobile-actions__button ss-card-mobile-actions__button--buy" href="{{ card_product.url }}">
+              Buy now
+            </a>
+          {%- else -%}
+            <button class="ss-card-mobile-actions__button ss-card-mobile-actions__button--cart" type="button" disabled>
+              {{ 'products.product.sold_out' | t }}
+            </button>
+            <a class="ss-card-mobile-actions__button ss-card-mobile-actions__button--buy" href="{{ card_product.url }}">
+              Details
+            </a>
+          {%- endif -%}
+        </div>
         {% assign product_form_id = 'quick-add-' | append: section_id | append: card_product.id %}
         {% if quick_add == 'standard' %}
           <div class="quick-add no-js-hidden">
@@ -653,7 +721,7 @@
       assign ratio = 0.8
     endif
   -%}
-  <div class="card-wrapper product-card-wrapper underline-links-hover">
+  <div class="card-wrapper product-card-wrapper ss-unified-product-card underline-links-hover">
     <div
       class="
         card card--{{ settings.card_style }}
