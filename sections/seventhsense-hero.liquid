@@ -154,23 +154,6 @@
     <div class="ss-hero">
       <div class="ss-hero__content" data-ss-reveal>
         <div class="ss-brand-lockup">
-          {%- if section.settings.show_theme_logo and theme_logo != blank -%}
-            <span class="ss-brand-lockup__logo">
-              {%- assign logo_alt = theme_logo.alt | default: shop.name | escape -%}
-              {%- assign logo_aspect_ratio = theme_logo.aspect_ratio | default: 1 -%}
-              {%- assign logo_height = settings.logo_width | divided_by: logo_aspect_ratio -%}
-              {{
-                theme_logo
-                | image_url: width: 320
-                | image_tag:
-                  widths: '80, 120, 160, 220, 320',
-                  width: settings.logo_width,
-                  height: logo_height,
-                  alt: logo_alt,
-                  loading: 'eager'
-              }}
-            </span>
-          {%- endif -%}
           <p class="ss-brand-lockup__name">{{ section.settings.brand_name | default: shop.name | escape }}</p>
         </div>
 

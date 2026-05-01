@@ -143,7 +143,7 @@ body.template-collection {
   gap: 2rem;
   max-width: 138rem;
   min-height: 28rem;
-  padding-top: clamp(5.2rem, 8vw, 9rem);
+  padding-top: clamp(5.2rem, 8vw, 6rem);
   padding-bottom: clamp(3.2rem, 6vw, 6rem);
 }
 

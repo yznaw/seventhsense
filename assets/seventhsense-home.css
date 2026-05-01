@@ -591,7 +591,7 @@ body:not(.template-index) .cart-item__image-container.gradient {
 
 .ss-floating-logo img {
   display: block;
-  width: clamp(8.8rem, 14vw, 16rem);
+  width: clamp(8.8rem, 14vw, 8rem);
   height: auto;
 }
 
