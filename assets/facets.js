@@ -9,9 +9,29 @@ class FacetFiltersForm extends HTMLElement {
 
     const facetForm = this.querySelector('form');
     facetForm.addEventListener('input', this.debouncedOnSubmit.bind(this));
+    facetForm.addEventListener('click', this.onFormClick.bind(this));
 
     const facetWrapper = this.querySelector('#FacetsWrapperDesktop');
     if (facetWrapper) facetWrapper.addEventListener('keyup', onKeyUpEscape);
+
+    this.querySelectorAll('.js-filter').forEach((filter) => {
+      filter.addEventListener('toggle', this.handleFilterToggle.bind(this));
+    });
+
+    FacetFiltersForm.normalizeProductGridSort();
+  }
+
+  handleFilterToggle(event) {
+    const toggledFilter = event.currentTarget;
+    if (!toggledFilter.open) return;
+
+    const selector = toggledFilter.classList.contains('mobile-facets__details') ? '.mobile-facets__details' : '.facets__disclosure';
+
+    this.querySelectorAll(selector).forEach((filter) => {
+      if (filter !== toggledFilter && filter.open) {
+        filter.removeAttribute('open');
+      }
+    });
   }
 
   static setListeners() {
@@ -84,12 +104,51 @@ class FacetFiltersForm extends HTMLElement {
       .parseFromString(html, 'text/html')
       .getElementById('ProductGridContainer').innerHTML;
 
+    FacetFiltersForm.normalizeProductGridSort();
+
     document
       .getElementById('ProductGridContainer')
       .querySelectorAll('.scroll-trigger')
       .forEach((element) => {
         element.classList.add('scroll-trigger--cancel');
       });
+  }
+
+  static normalizeProductGridSort() {
+    const sortBy = new URLSearchParams(window.location.search).get('sort_by');
+    if (sortBy !== 'price-ascending' && sortBy !== 'price-descending') return;
+
+    const grid = document.getElementById('product-grid');
+    if (!grid) return;
+
+    const items = Array.from(grid.querySelectorAll(':scope > .grid__item'));
+    if (items.length < 2) return;
+
+    const parsePrice = (item) => {
+      const priceNode =
+        item.querySelector('.price .price-item--regular') ||
+        item.querySelector('.price .price-item') ||
+        item.querySelector('.card-information .price');
+
+      if (!priceNode) return Number.POSITIVE_INFINITY;
+
+      const priceText = (priceNode.textContent || '').replace(/[^0-9.,-]/g, '').trim();
+      if (!priceText) return Number.POSITIVE_INFINITY;
+
+      const normalized = priceText.replace(/\./g, '').replace(',', '.');
+      const value = Number(normalized);
+      return Number.isNaN(value) ? Number.POSITIVE_INFINITY : value;
+    };
+
+    const direction = sortBy === 'price-descending' ? -1 : 1;
+    items
+      .sort((a, b) => {
+        const aPrice = parsePrice(a);
+        const bPrice = parsePrice(b);
+        if (aPrice === bPrice) return 0;
+        return aPrice > bPrice ? direction : -direction;
+      })
+      .forEach((item) => grid.appendChild(item));
   }
 
   static renderProductCount(html) {
@@ -259,26 +318,48 @@ class FacetFiltersForm extends HTMLElement {
     FacetFiltersForm.renderPage(searchParams, event);
   }
 
+  onFormClick(event) {
+    const applyButton = event.target.closest('.mobile-facets__apply');
+    if (!applyButton) return;
+    this.onMobileApply(event);
+  }
+
   onSubmitHandler(event) {
     event.preventDefault();
     const sortFilterForms = document.querySelectorAll('facet-filters-form form');
-    if (event.srcElement.className == 'mobile-facets__checkbox') {
-      const searchParams = this.createSearchParams(event.target.closest('form'));
-      this.onSubmitForm(searchParams, event);
-    } else {
-      const forms = [];
-      const isMobile = event.target.closest('form').id === 'FacetFiltersFormMobile';
+    const form = event.target.closest('form');
+    if (!form) return;
 
-      sortFilterForms.forEach((form) => {
-        if (!isMobile) {
-          if (form.id === 'FacetSortForm' || form.id === 'FacetFiltersForm' || form.id === 'FacetSortDrawerForm') {
-            forms.push(this.createSearchParams(form));
-          }
-        } else if (form.id === 'FacetFiltersFormMobile') {
-          forms.push(this.createSearchParams(form));
-        }
-      });
-      this.onSubmitForm(forms.join('&'), event);
+    const isMobile = form.id === 'FacetFiltersFormMobile';
+    if (isMobile) return;
+
+    const forms = [];
+    sortFilterForms.forEach((candidateForm) => {
+      if (
+        candidateForm.id === 'FacetSortForm' ||
+        candidateForm.id === 'FacetFiltersForm' ||
+        candidateForm.id === 'FacetSortDrawerForm'
+      ) {
+        forms.push(this.createSearchParams(candidateForm));
+      }
+    });
+    this.onSubmitForm(forms.join('&'), event);
+  }
+
+  onMobileApply(event) {
+    event.preventDefault();
+    const form = event.currentTarget.closest('form');
+    if (!form) return;
+
+    const searchParams = this.createSearchParams(form);
+    this.onSubmitForm(searchParams, event);
+
+    const menuDrawer = this.closest('menu-drawer');
+    const details = menuDrawer && menuDrawer.querySelector('details');
+    const summary = details && details.querySelector('summary');
+
+    if (menuDrawer && details && summary && typeof menuDrawer.closeMenuDrawer === 'function') {
+      menuDrawer.closeMenuDrawer(new Event('click'), summary);
     }
   }
 

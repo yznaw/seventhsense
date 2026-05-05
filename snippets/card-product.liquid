@@ -155,11 +155,11 @@
         </div>
         <div class="ss-card-floating-actions" aria-label="Quick actions for {{ card_product.title | escape }}">
           {%- if ss_card_direct_purchase -%}
-            <product-form class="ss-card-floating-actions__product-form" data-section-id="{{ section.id }}">
+            <product-form class="ss-card-floating-actions__product-form ss-product-buy ss-product-buy--floating" data-section-id="{{ section.id }}">
               {%- form 'product',
                 card_product,
                 id: ss_card_form_id,
-                class: 'ss-card-floating-actions__form',
+                class: 'ss-card-floating-actions__form ss-product-buy ss-product-buy--floating',
                 novalidate: 'novalidate',
                 data-type: 'add-to-cart-form'
               -%}
@@ -172,7 +172,7 @@
                 <button
                   type="submit"
                   name="add"
-                  class="ss-card-floating-actions__button ss-card-floating-actions__button--cart"
+                  class="ss-card-floating-actions__button ss-card-floating-actions__button--cart ss-product-buy__button ss-button ss-button--primary"
                   aria-live="polite"
                 >
                   <span>{{ 'products.product.add_to_cart' | t }}</span>
@@ -183,7 +183,7 @@
             <form
               method="post"
               action="{{ routes.cart_add_url }}"
-              class="ss-card-floating-actions__form ss-card-floating-actions__form--buy"
+              class="ss-card-floating-actions__form ss-card-floating-actions__form--buy ss-product-buy ss-product-buy--quick-checkout"
               data-ss-buy-now
             >
               <input
@@ -198,24 +198,24 @@
               >
               <button
                 type="submit"
-                class="ss-card-floating-actions__button ss-card-floating-actions__button--buy"
+                class="ss-card-floating-actions__button ss-card-floating-actions__button--buy ss-product-buy__quick-link ss-product-buy__quick-link--checkout"
                 data-ss-buy-now-label
               >
                 Buy now
               </button>
             </form>
           {%- elsif card_product.available -%}
-            <a class="ss-card-floating-actions__button ss-card-floating-actions__button--cart" href="{{ card_product.url }}">
+            <a class="ss-card-floating-actions__button ss-card-floating-actions__button--cart ss-product-buy__button ss-button ss-button--primary" href="{{ card_product.url }}">
               {{ 'products.product.choose_options' | t }}
             </a>
-            <a class="ss-card-floating-actions__button ss-card-floating-actions__button--buy" href="{{ card_product.url }}">
+            <a class="ss-card-floating-actions__button ss-card-floating-actions__button--buy ss-product-buy__quick-link ss-product-buy__quick-link--checkout" href="{{ card_product.url }}">
               Buy now
             </a>
           {%- else -%}
-            <button class="ss-card-floating-actions__button ss-card-floating-actions__button--cart" type="button" disabled>
+            <button class="ss-card-floating-actions__button ss-card-floating-actions__button--cart ss-product-buy__button ss-button ss-button--primary" type="button" disabled>
               <span>{{ 'products.product.sold_out' | t }}</span>
             </button>
-            <a class="ss-card-floating-actions__button ss-card-floating-actions__button--buy" href="{{ card_product.url }}">
+            <a class="ss-card-floating-actions__button ss-card-floating-actions__button--buy ss-product-buy__quick-link ss-product-buy__quick-link--checkout" href="{{ card_product.url }}">
               Details
             </a>
           {%- endif -%}
@@ -372,7 +372,7 @@
               method="post"
               action="{{ routes.cart_add_url }}"
               id="{{ ss_card_mobile_form_id }}"
-              class="ss-card-mobile-actions__form ss-card-mobile-actions__form--cart"
+              class="ss-card-mobile-actions__form ss-card-mobile-actions__form--cart ss-product-buy ss-product-buy--floating"
               data-ss-add-to-cart
             >
               <input
@@ -387,7 +387,7 @@
               >
               <button
                 type="submit"
-                class="ss-card-mobile-actions__button ss-card-mobile-actions__button--cart"
+                class="ss-card-mobile-actions__button ss-card-mobile-actions__button--cart ss-product-buy__button ss-button ss-button--primary"
                 data-ss-add-label
               >
                 Add to cart
@@ -396,7 +396,7 @@
             <form
               method="post"
               action="{{ routes.cart_add_url }}"
-              class="ss-card-mobile-actions__form ss-card-mobile-actions__form--buy"
+              class="ss-card-mobile-actions__form ss-card-mobile-actions__form--buy ss-product-buy ss-product-buy--quick-checkout"
               data-ss-buy-now
             >
               <input
@@ -411,24 +411,24 @@
               >
               <button
                 type="submit"
-                class="ss-card-mobile-actions__button ss-card-mobile-actions__button--buy"
+                class="ss-card-mobile-actions__button ss-card-mobile-actions__button--buy ss-product-buy__quick-link ss-product-buy__quick-link--checkout"
                 data-ss-buy-now-label
               >
                 Buy now
               </button>
             </form>
           {%- elsif card_product.available -%}
-            <a class="ss-card-mobile-actions__button ss-card-mobile-actions__button--cart" href="{{ card_product.url }}">
+            <a class="ss-card-mobile-actions__button ss-card-mobile-actions__button--cart ss-product-buy__button ss-button ss-button--primary" href="{{ card_product.url }}">
               {{ 'products.product.choose_options' | t }}
             </a>
-            <a class="ss-card-mobile-actions__button ss-card-mobile-actions__button--buy" href="{{ card_product.url }}">
+            <a class="ss-card-mobile-actions__button ss-card-mobile-actions__button--buy ss-product-buy__quick-link ss-product-buy__quick-link--checkout" href="{{ card_product.url }}">
               Buy now
             </a>
           {%- else -%}
-            <button class="ss-card-mobile-actions__button ss-card-mobile-actions__button--cart" type="button" disabled>
+            <button class="ss-card-mobile-actions__button ss-card-mobile-actions__button--cart ss-product-buy__button ss-button ss-button--primary" type="button" disabled>
               {{ 'products.product.sold_out' | t }}
             </button>
-            <a class="ss-card-mobile-actions__button ss-card-mobile-actions__button--buy" href="{{ card_product.url }}">
+            <a class="ss-card-mobile-actions__button ss-card-mobile-actions__button--buy ss-product-buy__quick-link ss-product-buy__quick-link--checkout" href="{{ card_product.url }}">
               Details
             </a>
           {%- endif -%}

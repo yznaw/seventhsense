@@ -502,6 +502,16 @@
                   {%- endif -%}
                 </p>
               </div>
+              <button
+                type="button"
+                class="mobile-facets__header-close"
+                onclick="this.closest('.mobile-facets__wrapper').querySelector('summary').click()"
+                aria-label="Close filters"
+              >
+                <span class="svg-wrapper">
+                  {{- 'icon-close.svg' | inline_asset_content -}}
+                </span>
+              </button>
             </div>
             <div
               id="FacetsWrapperMobile"
@@ -543,7 +553,7 @@
                             type="button"
                           >
                             {{- 'icon-arrow.svg' | inline_asset_content -}}
-                            <span>{{ filter.label | escape }}</span>
+                            <span>Back to filters</span>
                             {%- if filter.operator == 'AND' -%}
                               <span class="facets__and-helptext">
                                 {{ 'products.facets.filter_and_operator_subtitle' | t }}
@@ -653,10 +663,9 @@
                             </facet-remove>
                             <button
                               type="button"
-                              class="button button--primary"
-                              onclick="this.closest('.mobile-facets__wrapper').querySelector('summary').click()"
+                              class="button button--primary mobile-facets__apply"
                             >
-                              {{ 'products.facets.apply' | t }}
+                              Apply
                             </button>
                           </div>
                         </div>
@@ -685,7 +694,7 @@
                             type="button"
                           >
                             {{- 'icon-arrow.svg' | inline_asset_content -}}
-                            {{ filter.label | escape }}
+                            Back to filters
                           </button>
 
                           {%- assign max_price_amount = filter.range_max | money | strip_html | escape -%}
@@ -704,10 +713,9 @@
                             </facet-remove>
                             <button
                               type="button"
-                              class="button button--primary"
-                              onclick="this.closest('.mobile-facets__wrapper').querySelector('summary').click()"
+                              class="button button--primary mobile-facets__apply"
                             >
-                              {{ 'products.facets.apply' | t }}
+                              Apply
                             </button>
                           </div>
                         </div>
@@ -760,10 +768,9 @@
                 </facet-remove>
                 <button
                   type="button"
-                  class="button button--primary"
-                  onclick="this.closest('.mobile-facets__wrapper').querySelector('summary').click()"
+                  class="button button--primary mobile-facets__apply"
                 >
-                  {{ 'products.facets.apply' | t }}
+                  Apply & close
                 </button>
               </div>
             </div>

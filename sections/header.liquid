@@ -72,6 +72,10 @@
   }
 
   .ss-site-header {
+    --ss-header-icon-button-size: 4.2rem;
+    --ss-header-icon-glyph-size: 2.05rem;
+    --ss-header-icon-search-size: 2.05rem;
+    --ss-header-icon-cart-size: 2.25rem;
     border-bottom: 1px solid rgba(23, 19, 17, 0.07);
     background:
       linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.68)) !important;
@@ -117,6 +121,12 @@
 
   .ss-site-header .header__heading-logo {
     filter: drop-shadow(0 8px 18px rgba(23, 19, 17, 0.08));
+  }
+
+  .ss-site-header__brand-fallback {
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
   }
 
   .ss-site-header .header__inline-menu {
@@ -176,8 +186,8 @@
 
   .ss-site-header .header__icon,
   .ss-site-header .header__icon--cart .icon {
-    width: 4.2rem;
-    height: 4.2rem;
+    width: var(--ss-header-icon-button-size);
+    height: var(--ss-header-icon-button-size);
     border: 1px solid transparent;
     border-radius: 999px;
     color: var(--ss-ink);
@@ -192,13 +202,27 @@
   }
 
   .ss-site-header .header__icon .svg-wrapper {
-    width: 4.2rem;
-    height: 4.2rem;
+    width: var(--ss-header-icon-button-size);
+    height: var(--ss-header-icon-button-size);
   }
 
-  .ss-site-header .header__icon .icon {
-    width: 2rem;
-    height: 2rem;
+  .ss-site-header .header__icon .icon,
+  .ss-site-header .header__icon .svg-wrapper svg {
+    width: var(--ss-header-icon-glyph-size);
+    height: var(--ss-header-icon-glyph-size);
+  }
+
+  .ss-site-header .header__icon--search .icon-search,
+  .ss-site-header .header__icon--search .svg-wrapper svg {
+    width: var(--ss-header-icon-search-size);
+    height: var(--ss-header-icon-search-size);
+  }
+
+  .ss-site-header .header__icon--cart .icon-cart,
+  .ss-site-header .header__icon--cart .icon-cart-empty,
+  .ss-site-header .header__icon--cart .svg-wrapper svg {
+    width: var(--ss-header-icon-cart-size);
+    height: var(--ss-header-icon-cart-size);
   }
 
   .ss-site-header .header__icon--cart {
@@ -371,6 +395,13 @@
   }
 
   @media screen and (max-width: 749px) {
+    .ss-site-header {
+      --ss-header-icon-button-size: 4rem;
+      --ss-header-icon-glyph-size: 1.95rem;
+      --ss-header-icon-search-size: 1.95rem;
+      --ss-header-icon-cart-size: 2.15rem;
+    }
+
     .ss-site-header .header {
       min-height: 7rem;
       padding-left: 1.5rem;
@@ -388,8 +419,8 @@
     .ss-site-header .header__icon,
     .ss-site-header .header__icon--cart .icon,
     .ss-site-header .header__icon .svg-wrapper {
-      width: 4rem;
-      height: 4rem;
+      width: var(--ss-header-icon-button-size);
+      height: var(--ss-header-icon-button-size);
     }
 
     .ss-site-header .search-modal__content {
@@ -492,7 +523,7 @@
                 }}
               </div>
             {%- else -%}
-              <span class="visually-hidden">{{ shop.name }}</span>
+              <span class="ss-site-header__brand-fallback">{{ shop.name }}</span>
             {%- endif -%}
           </a>
       {%- if request.page_type == 'index' -%}
@@ -533,7 +564,7 @@
                 }}
               </div>
             {%- else -%}
-              <span class="visually-hidden">{{ shop.name }}</span>
+              <span class="ss-site-header__brand-fallback">{{ shop.name }}</span>
             {%- endif -%}
           </a>
       {%- if request.page_type == 'index' -%}

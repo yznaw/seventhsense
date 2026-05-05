@@ -638,8 +638,8 @@ h3 .icon-arrow,
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 20px;
-  height: 20px;
+  width: 3.7rem;
+  height: 3.7rem;
 }
 
 .svg-wrapper > svg {
@@ -1053,7 +1053,7 @@ summary::-webkit-details-marker {
   }
 
   .grid--peek.slider .grid__item:first-of-type {
-    margin-left: 1.5rem;
+    /* margin-left: 1.5rem; */
   }
 
   /* Fix to show some space at the end of our sliders in all browsers */

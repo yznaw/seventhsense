@@ -3,6 +3,8 @@
   grid-template-columns: repeat(2, auto);
   grid-template-rows: repeat(2, auto);
   padding-top: 1rem;
+  position: relative;
+  overflow: visible;
 }
 
 .active-facets-mobile {
@@ -175,6 +177,7 @@
   grid-row: 1;
   display: flex;
   flex-wrap: wrap;
+  position: relative;
 }
 
 .facets__heading {
@@ -190,6 +193,7 @@
 
 .facets__disclosure {
   margin-right: 3.5rem;
+  position: relative;
 }
 
 .facets__summary {
@@ -213,6 +217,10 @@
 .facets__disclosure[open] .facets__summary,
 .facets__summary:hover {
   color: rgb(var(--color-foreground));
+}
+
+.facets__disclosure[open] {
+  z-index: 35;
 }
 
 .facets__disclosure[open] .facets__display,
@@ -278,6 +286,7 @@
   width: 35rem;
   max-height: 55rem;
   overflow-y: auto;
+  z-index: 40;
 }
 
 .facets__header {

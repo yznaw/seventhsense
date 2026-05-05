@@ -8,9 +8,13 @@
   assign cta_link = section.settings.cta_link | default: '#ss-featured-products'
   assign hero_video = section.settings.hero_video
   assign navigation_menu = section.settings.navigation_menu
-  assign theme_logo = settings.logo
-  if theme_logo == blank and shop.brand.logo != blank
-    assign theme_logo = shop.brand.logo
+  assign floating_brand_label = section.settings.brand_name | default: shop.name
+  assign theme_logo = blank
+  if section.settings.show_theme_logo
+    assign theme_logo = settings.logo
+    if theme_logo == blank and shop.brand.logo != blank
+      assign theme_logo = shop.brand.logo
+    endif
   endif
 
 -%}
@@ -31,8 +35,7 @@
 
 <section class="ss-section ss-shell ss-hero-section section-{{ section.id }}-padding">
   <div class="page-width">
-    {%- if section.settings.floating_logo != blank or theme_logo != blank or section.settings.logo_image_url != blank -%}
-      <a href="{{ routes.root_url }}" class="ss-floating-logo" aria-label="{{ shop.name | escape }}">
+    <a href="{{ routes.root_url }}" class="ss-floating-logo" aria-label="{{ floating_brand_label | escape }}">
       {%- if section.settings.floating_logo != blank -%}
         {{
           section.settings.floating_logo
@@ -40,11 +43,11 @@
           | image_tag:
             widths: '120, 180, 240, 300, 360',
             width: 240,
-            alt: section.settings.brand_name | default: shop.name,
+            alt: floating_brand_label,
             loading: 'eager'
         }}
       {%- elsif theme_logo != blank -%}
-        {%- assign floating_logo_alt = theme_logo.alt | default: shop.name | escape -%}
+        {%- assign floating_logo_alt = theme_logo.alt | default: floating_brand_label | escape -%}
         {%- assign floating_logo_aspect_ratio = theme_logo.aspect_ratio | default: 1 -%}
         {%- assign floating_logo_height = 240 | divided_by: floating_logo_aspect_ratio -%}
         {{
@@ -60,14 +63,15 @@
       {%- elsif section.settings.logo_image_url != blank -%}
         <img
           src="{{ section.settings.logo_image_url | escape }}"
-          alt="{{ section.settings.brand_name | default: shop.name | escape }}"
+          alt="{{ floating_brand_label | escape }}"
           width="240"
           height="120"
           loading="eager"
         >
+      {%- else -%}
+        <span>{{ floating_brand_label | escape }}</span>
       {%- endif -%}
-      </a>
-    {%- endif -%}
+    </a>
 
     {%- if section.settings.show_language_toggle and localization.available_languages.size > 1 -%}
       {%- liquid
@@ -125,24 +129,8 @@
       <nav class="ss-floating-tabs" aria-label="Primary navigation" data-ss-reveal>
         <ul class="ss-floating-tabs__list">
           {%- for link in navigation_menu.links -%}
-            {%- liquid
-              assign tab_url = link.url
-              assign tab_title = link.title | downcase
-              assign catalog_url = '#ss-featured-products'
-              unless request.page_type == 'index'
-                assign catalog_url = routes.root_url | append: '#ss-featured-products'
-              endunless
-
-              if section.settings.route_catalog_tabs_to_catalog and tab_title contains 'catalog'
-                assign tab_url = catalog_url
-              elsif section.settings.route_catalog_tabs_to_catalog and tab_title contains 'shop'
-                assign tab_url = catalog_url
-              elsif section.settings.route_catalog_tabs_to_catalog and tab_title contains 'product'
-                assign tab_url = catalog_url
-              endif
-            -%}
             <li>
-              <a href="{{ tab_url }}" class="ss-floating-tabs__link{% if link.current or tab_url == '#ss-featured-products' %} is-active{% endif %}">
+              <a href="{{ link.url }}" class="ss-floating-tabs__link{% if link.current %} is-active{% endif %}">
                 {{ link.title | escape }}
               </a>
             </li>
@@ -222,12 +210,6 @@
       "id": "navigation_menu",
       "label": "Navigation menu",
       "default": "main-menu"
-    },
-    {
-      "type": "checkbox",
-      "id": "route_catalog_tabs_to_catalog",
-      "label": "Route Catalog, Shop, and Products tabs to homepage catalog",
-      "default": true
     },
     {
       "type": "checkbox",

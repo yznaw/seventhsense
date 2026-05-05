@@ -84,29 +84,28 @@
                 {%- endif -%}
               </p>
             </div>
-
-            <div class="ss-product-ritual-card__actions" aria-label="Quick actions for {{ product.title | escape }}">
+            <div class="ss-product-ritual-card__actions ss-card-mobile-actions" aria-label="Quick actions for {{ product.title | escape }}">
               {%- if ss_home_direct_purchase -%}
-                <form method="post" action="{{ routes.cart_add_url }}" class="ss-product-buy ss-product-buy--floating" data-ss-add-to-cart>
+                <form method="post" action="{{ routes.cart_add_url }}" class="ss-product-buy ss-product-buy--floating ss-card-mobile-actions__form ss-card-mobile-actions__form--cart" data-ss-add-to-cart>
                   <input type="hidden" name="id" value="{{ current_variant.id }}">
                   <input type="hidden" name="quantity" value="1">
-                  <button type="submit" class="ss-button ss-button--primary ss-product-buy__button" data-ss-add-label>
+                  <button type="submit" class="ss-button ss-button--primary ss-product-buy__button ss-card-mobile-actions__button ss-card-mobile-actions__button--cart" data-ss-add-label>
                     Add to cart
                   </button>
                 </form>
-                <form method="post" action="{{ routes.cart_add_url }}" class="ss-product-buy ss-product-buy--quick-checkout" data-ss-buy-now>
+                <form method="post" action="{{ routes.cart_add_url }}" class="ss-product-buy ss-product-buy--quick-checkout ss-card-mobile-actions__form ss-card-mobile-actions__form--buy" data-ss-buy-now>
                   <input type="hidden" name="id" value="{{ current_variant.id }}">
                   <input type="hidden" name="quantity" value="1">
-                  <button type="submit" class="ss-product-buy__quick-link ss-product-buy__quick-link--checkout" data-ss-buy-now-label>
+                  <button type="submit" class="ss-product-buy__quick-link ss-product-buy__quick-link--checkout ss-card-mobile-actions__button ss-card-mobile-actions__button--buy" data-ss-buy-now-label>
                     Buy now
                   </button>
                 </form>
               {%- elsif product.available -%}
-                <a class="ss-product-buy__quick-link" href="{{ product.url }}">Choose options</a>
-                <a class="ss-product-buy__quick-link ss-product-buy__quick-link--checkout" href="{{ product.url }}">Buy now</a>
+                <a class="ss-product-buy__quick-link ss-card-mobile-actions__button ss-card-mobile-actions__button--cart" href="{{ product.url }}">Choose options</a>
+                <a class="ss-product-buy__quick-link ss-product-buy__quick-link--checkout ss-card-mobile-actions__button ss-card-mobile-actions__button--buy" href="{{ product.url }}">Buy now</a>
               {%- else -%}
-                <button type="button" class="ss-product-buy__quick-link ss-product-buy__quick-link--disabled" disabled>Sold out</button>
-                <a class="ss-product-buy__quick-link ss-product-buy__quick-link--checkout" href="{{ product.url }}">Details</a>
+                <button type="button" class="ss-product-buy__quick-link ss-product-buy__quick-link--disabled ss-card-mobile-actions__button ss-card-mobile-actions__button--cart" disabled>Sold out</button>
+                <a class="ss-product-buy__quick-link ss-product-buy__quick-link--checkout ss-card-mobile-actions__button ss-card-mobile-actions__button--buy" href="{{ product.url }}">Details</a>
               {%- endif -%}
             </div>
           </article>

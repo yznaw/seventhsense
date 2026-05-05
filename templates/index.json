@@ -12,7 +12,6 @@
     "seventhsense_hero": {
       "type": "seventhsense-hero",
       "settings": {
-        "route_catalog_tabs_to_catalog": true,
         "show_language_toggle": true,
         "floating_logo": "",
         "show_theme_logo": true,

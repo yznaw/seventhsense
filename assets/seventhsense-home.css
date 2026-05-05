@@ -695,8 +695,8 @@ body:not(.template-index) .cart-item__image-container.gradient {
 }
 
 .ss-floating-cart__icon svg {
-  width: 1.9rem;
-  height: 1.9rem;
+  width: 2.07rem;
+  height: 2.07rem;
 }
 
 .ss-floating-cart__count {
@@ -1873,11 +1873,17 @@ body:not(.template-index) .cart-item__image-container.gradient {
   bottom: 0;
   left: 0;
   z-index: 2;
-  height: 56%;
-  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 40%, rgba(255, 228, 216, 1) 85%);
-  box-shadow: 0 40px 80px rgb(232 222 241 / 30%), inset 0 1px 1px rgba(255, 255, 255, 0.1);
-  mask-image: linear-gradient(to bottom, transparent, black 15%) !important;
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%);
+  height: 38%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 244, 238, 0.08) 34%,
+    rgba(255, 236, 226, 0.34) 68%,
+    rgba(255, 228, 216, 0.94) 100%
+  );
+  box-shadow: 0 28px 56px rgba(232, 222, 241, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 24%) !important;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 24%);
   pointer-events: none;
 }
 
@@ -1957,7 +1963,7 @@ body:not(.template-index) .cart-item__image-container.gradient {
   left: 1.2rem;
   z-index: 4;
   display: grid;
-  grid-template-columns: minmax(8.4rem, 3fr) minmax(0, 7fr);
+  grid-template-columns: minmax(8.4rem, 3fr) minmax(0, 5fr);
   align-items: center;
   gap: 0.8rem;
   visibility: hidden;
@@ -2053,7 +2059,7 @@ body:not(.template-index) .cart-item__image-container.gradient {
 .ss-button--primary {
   background: var(--ss-glass-button-bg);
   color: var(--ss-ink);
-  border: 1px solid rgba(255,255,255,0.74);
+  border: 1px solid #4a3d35;
   box-shadow:
     0 20px 42px rgba(23,19,17,0.14),
     inset 0 1px 0 rgba(255,255,255,0.86),
@@ -2735,64 +2741,142 @@ body:not(.template-index) .cart-item__image-container.gradient {
   }
 
   .ss-products-section .ss-product-ritual-card {
-    aspect-ratio: 1 / 1.22;
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: auto;
+    min-height: 100%;
+    overflow: hidden;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(255, 246, 241, 0.98)),
+      #fff8f4;
     box-shadow: 0 12px 26px rgba(23, 19, 17, 0.08);
     transform: none;
     transform-style: flat;
   }
 
   .ss-products-section .ss-product-ritual-card::after {
-    height: 62%;
+    content: none;
+  }
+
+  .ss-products-section .ss-product-ritual-card__media {
+    position: relative;
+    inset: auto;
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1.18;
+    flex: 0 0 auto;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    overflow: hidden;
+  }
+
+  .ss-products-section .ss-product-ritual-card__media::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    height: 28%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 234, 223, 0.34));
+    pointer-events: none;
+  }
+
+  .ss-products-section .ss-product-ritual-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: none;
+  }
+
+  .ss-products-section .ss-product-ritual-card:hover .ss-product-ritual-card__image,
+  .ss-products-section .ss-product-ritual-card__media:hover .ss-product-ritual-card__image {
+    filter: none;
+    transform: none;
   }
 
   .ss-products-section .ss-product-ritual-card__overlay {
+    position: static;
+    z-index: 1;
+    display: block;
+    flex: 1 1 auto;
     gap: 0.45rem;
-    padding: 4rem 1rem 1rem;
+    padding: 1.15rem 1rem 0;
+    background: transparent;
+    pointer-events: auto;
   }
 
   .ss-products-section .ss-product-ritual-card__overlay h3 {
     display: -webkit-box;
     overflow: hidden;
-    font-family: var(--ss-font-sans);
-    font-size: clamp(1.35rem, 3.9vw, 1.58rem);
-    font-weight: 750;
-    line-height: 1.12;
+    margin: 0;
+    font-family: var(--ss-font-display);
+    font-size: clamp(1.65rem, 5.4vw, 2.05rem);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
   }
 
+  .ss-products-section .ss-product-ritual-card__overlay h3 a {
+    pointer-events: auto;
+  }
+
   .ss-products-section .ss-product-ritual-card__price {
-    font-size: 1.22rem;
+    margin-top: 0.45rem;
+    color: var(--ss-ink);
+    font-size: 1.18rem;
+    font-weight: 800;
+    line-height: 1.15;
   }
 
-  .ss-product-ritual-card__actions {
-    right: 0.75rem;
-    bottom: 6.4rem;
-    left: 0.75rem;
-    grid-template-columns: minmax(7.2rem, 3fr) minmax(0, 7fr);
-    gap: 0.55rem;
+  .ss-products-section .ss-product-ritual-card__actions.ss-card-mobile-actions {
+    position: static;
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+    margin-top: 1rem;
+    padding: 0 1rem 1rem;
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
   }
 
-  /* .ss-product-buy--floating .ss-product-buy__button,
-  .ss-product-buy__quick-link {
+  .ss-products-section .ss-product-ritual-card__actions.ss-card-mobile-actions .ss-card-mobile-actions__form {
+    display: block;
+    margin: 0;
+  }
+
+  .ss-products-section .ss-product-ritual-card__actions.ss-card-mobile-actions .ss-card-mobile-actions__form--buy,
+  .ss-products-section .ss-product-ritual-card__actions.ss-card-mobile-actions .ss-card-mobile-actions__button--buy {
+    order: -1;
+  }
+
+  .ss-products-section .ss-product-ritual-card__actions.ss-card-mobile-actions .ss-card-mobile-actions__button,
+  .ss-products-section .ss-product-ritual-card__actions.ss-card-mobile-actions .ss-product-buy--floating .ss-product-buy__button,
+  .ss-products-section .ss-product-ritual-card__actions.ss-card-mobile-actions .ss-product-buy__quick-link {
+    width: 100%;
     min-height: 3.9rem;
     padding: 0.75rem 0.72rem;
-    font-size: 0.92rem;
-    letter-spacing: 0.05em;
-  } */
-
-  .ss-product-buy--floating .ss-product-buy__button,
-  .ss-product-buy__quick-link {
-    min-height: 3.9rem;
-    padding: 0.75rem 0.72rem;
-
     font-size: 0.9rem;
     letter-spacing: 0.04em;
-
+    line-height: 1;
+    text-indent: 0;
     backdrop-filter: blur(14px);
-}
-  .ss-product-buy__quick-link--checkout {
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .ss-products-section .ss-product-ritual-card__actions.ss-card-mobile-actions .ss-product-buy__quick-link--checkout {
     font-size: 1rem;
+    border-color: rgba(66, 45, 34, 0.96);
+    background-color: #2a1c16;
+    background-image:
+      radial-gradient(circle at 24% 0%, rgba(255, 255, 255, 0.16), transparent 36%),
+      linear-gradient(180deg, #5a3e30 0%, #2a1c16 100%);
+    color: #ffffff;
+    -webkit-text-fill-color: #ffffff;
   }
 }
 

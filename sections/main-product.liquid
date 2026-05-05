@@ -73,8 +73,40 @@
   {%- endif -%}
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
+  {%- assign ss_description_metafield = product.metafields.custom.product_description -%}
+  {%- assign ss_ingredients_metafield = product.metafields.custom.key_ingredients -%}
+  {%- assign ss_how_to_use_metafield = product.metafields.custom.how_to_use -%}
+  {%- assign product_description_block = blank -%}
+  {%- if product.description != blank
+    or ss_description_metafield != blank
+    or ss_ingredients_metafield != blank
+    or ss_how_to_use_metafield != blank
+  -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'description' -%}
+        {%- assign product_description_block = block -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+  {%- liquid
+    assign ss_product_heading = product.title
+    assign ss_product_lead = product.metafields.custom.short_description.value
+
+    if product.handle == 'body-oil'
+      assign ss_product_heading = 'Nourishing Body Oil'
+    endif
+
+    if ss_product_lead == blank
+      if product.handle == 'body-oil'
+        assign ss_product_lead = 'A refined botanical body oil designed to soften, replenish, and leave skin with a quiet satin glow.'
+      else
+        assign ss_product_lead = product.description | replace: 'Ingredients', ' Ingredients' | replace: 'INGREDIENTS', ' INGREDIENTS' | replace: 'How to use', ' How to use' | replace: 'HOW TO USE', ' HOW TO USE' | strip_html | strip | split: 'Ingredients' | first | split: 'INGREDIENTS' | first | split: 'How to use' | first | split: 'HOW TO USE' | first | truncatewords: 24
+      endif
+    endif
+  -%}
   <div class="page-width ss-product-page__inner">
-    <div class="product ss-product-page__layout product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
+    <div class="product ss-product-page__layout{% if product_description_block != blank %} ss-product-page__layout--with-description{% endif %} product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
       <div class="grid__item product__media-wrapper ss-product-page__media" data-ss-reveal data-ss-tilt>
         {% render 'product-media-gallery', variant_images: variant_images %}
       </div>
@@ -101,10 +133,13 @@
                   {%- if product.vendor != blank -%}
                     <p class="ss-product-page__eyebrow">{{ product.vendor | escape }}</p>
                   {%- endif -%}
-                  <h1>{{ product.title | escape }}</h1>
+                  <h1>{{ ss_product_heading | escape }}</h1>
+                  {%- if ss_product_lead != blank -%}
+                    <p class="ss-product-page__lead">{{ ss_product_lead }}</p>
+                  {%- endif -%}
                   <a href="{{ product.url }}" class="product__title">
                     <h2 class="h1">
-                      {{ product.title | escape }}
+                      {{ ss_product_heading | escape }}
                     </h2>
                   </a>
                 </div>
@@ -195,11 +230,6 @@
                   {%- endif -%}
                 </p>
               {%- when 'description' -%}
-                {%- if product.description != blank -%}
-                  <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
-                    {{ product.description }}
-                  </div>
-                {%- endif -%}
               {%- when 'sku' -%}
                 <p
                   class="product__sku{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}{% if product.selected_or_first_available_variant.sku.size == 0 %} visibility-hidden{% endif %}"
@@ -481,7 +511,13 @@
               {%- when 'variant_picker' -%}
                 {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
               {%- when 'buy_buttons' -%}
-                {%- assign ss_product_buy_buttons_block = block -%}
+                {%- render 'buy-buttons',
+                  block: block,
+                  product: product,
+                  product_form_id: product_form_id,
+                  section_id: section.id,
+                  show_pickup_availability: true
+                -%}
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
                   <div class="rating-wrapper">
@@ -679,55 +715,355 @@
           </a>
         </section>
       </div>
+      {%- if product_description_block != blank -%}
+        <a class="ss-product-page__scroll-cue" href="#ProductDetails-{{ section.id }}" aria-label="Scroll to product details">
+          <span class="ss-product-page__scroll-cue-line" aria-hidden="true"></span>
+          <span class="ss-product-page__scroll-cue-icon" aria-hidden="true"></span>
+        </a>
+      {%- endif -%}
+      {%- if product_description_block != blank -%}
+        <div
+          id="ProductDetails-{{ section.id }}"
+          class="grid__item ss-product-page__description-panel{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          data-ss-reveal
+          style="--ss-delay: 160ms;"
+          {{ product_description_block.shopify_attributes }}
+        >
+          <div class="ss-product-page__details-card" data-ss-product-tabs>
+            <div class="ss-product-page__tabs" role="tablist" aria-label="Product details">
+              <button
+                type="button"
+                class="ss-product-page__tab is-active"
+                id="ProductTab-description-{{ section.id }}"
+                role="tab"
+                aria-selected="true"
+                aria-controls="ProductPanel-description-{{ section.id }}"
+                data-ss-tab-target="description"
+              >
+                Description
+              </button>
+              <button
+                type="button"
+                class="ss-product-page__tab"
+                id="ProductTab-ingredients-{{ section.id }}"
+                role="tab"
+                aria-selected="false"
+                aria-controls="ProductPanel-ingredients-{{ section.id }}"
+                data-ss-tab-target="ingredients"
+              >
+                Key ingredients
+              </button>
+              <button
+                type="button"
+                class="ss-product-page__tab"
+                id="ProductTab-how-{{ section.id }}"
+                role="tab"
+                aria-selected="false"
+                aria-controls="ProductPanel-how-{{ section.id }}"
+                data-ss-tab-target="how"
+              >
+                How to use
+              </button>
+            </div>
+            <div class="ss-product-page__tab-panels">
+              <div
+                class="ss-product-page__tab-panel is-active"
+                id="ProductPanel-description-{{ section.id }}"
+                role="tabpanel"
+                aria-labelledby="ProductTab-description-{{ section.id }}"
+                data-ss-tab-panel="description"
+              >
+                <div class="rte ss-product-page__tab-content" data-ss-tab-content="description">
+                  {%- if ss_description_metafield != blank -%}
+                    <div data-ss-custom-content="true">
+                      {{ ss_description_metafield | metafield_tag }}
+                    </div>
+                  {%- elsif ss_product_lead != blank -%}
+                    <p>{{ ss_product_lead }}</p>
+                  {%- endif -%}
+                </div>
+              </div>
+              <div
+                class="ss-product-page__tab-panel"
+                id="ProductPanel-ingredients-{{ section.id }}"
+                role="tabpanel"
+                aria-labelledby="ProductTab-ingredients-{{ section.id }}"
+                hidden
+                data-ss-tab-panel="ingredients"
+              >
+                <div class="rte ss-product-page__tab-content" data-ss-tab-content="ingredients">
+                  {%- if ss_ingredients_metafield != blank -%}
+                    <div data-ss-custom-content="true">
+                      {{ ss_ingredients_metafield | metafield_tag }}
+                    </div>
+                  {%- endif -%}
+                </div>
+              </div>
+              <div
+                class="ss-product-page__tab-panel"
+                id="ProductPanel-how-{{ section.id }}"
+                role="tabpanel"
+                aria-labelledby="ProductTab-how-{{ section.id }}"
+                hidden
+                data-ss-tab-panel="how"
+              >
+                <div class="rte ss-product-page__tab-content" data-ss-tab-content="how">
+                  {%- if ss_how_to_use_metafield != blank -%}
+                    <div data-ss-custom-content="true">
+                      {{ ss_how_to_use_metafield | metafield_tag }}
+                    </div>
+                  {%- else -%}
+                    <p>Warm a small amount between palms and massage onto clean skin until absorbed.</p>
+                  {%- endif -%}
+                </div>
+              </div>
+            </div>
+            <div class="ss-product-page__raw-description" hidden data-ss-raw-description>
+              {{ product.description }}
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
     </div>
 
-    {%- if ss_product_buy_buttons_block != blank -%}
-      <div class="ss-product-floating-form" data-ss-product-floating-form>
-        {%- render 'buy-buttons',
-          block: ss_product_buy_buttons_block,
-          product: product,
-          product_form_id: product_form_id,
-          section_id: section.id,
-          show_pickup_availability: false
-        -%}
-      </div>
-      <script>
-        (() => {
-          const root = document.documentElement;
-          const productDock = document.querySelector('.ss-product-purchase-dock');
-          const productPage = productDock?.closest('.ss-product-page');
-          const syncProductDockViewport = () => {
-            const viewportHeight = Math.max(
-              window.visualViewport?.height || 0,
-              window.innerHeight || 0,
-              document.documentElement.clientHeight || 0,
-              1
-            );
-            const scaledViewportHeight =
-              viewportHeight < 420 ? viewportHeight * (window.devicePixelRatio || 1) : viewportHeight;
-            const shellViewportHeight =
-              viewportHeight < 420 && window.outerHeight > viewportHeight * 1.4 && window.outerHeight < 900
-                ? window.outerHeight
-                : 0;
+    <script>
+      (() => {
+        const root = document.getElementById('MainProduct-{{ section.id }}');
+        const tabsRoot = root?.querySelector('[data-ss-product-tabs]');
 
-            root.style.setProperty(
-              '--ss-visual-vh',
-              `${Math.max(viewportHeight, scaledViewportHeight, shellViewportHeight)}px`
-            );
+        if (!tabsRoot || tabsRoot.dataset.ssTabsReady === 'true') return;
 
-            const pageTop = productPage ? productPage.getBoundingClientRect().top + (window.scrollY || 0) : 0;
-            const scrollY = (window.scrollY || window.pageYOffset || 0) - pageTop;
-            root.style.setProperty('--ss-product-scroll-y', `${scrollY}px`);
-          };
+        tabsRoot.dataset.ssTabsReady = 'true';
 
-          syncProductDockViewport();
-          window.addEventListener('scroll', syncProductDockViewport, { passive: true });
-          window.addEventListener('resize', syncProductDockViewport);
-          window.visualViewport?.addEventListener('resize', syncProductDockViewport);
-          window.visualViewport?.addEventListener('scroll', syncProductDockViewport);
-        })();
-      </script>
-    {%- endif -%}
+        const buttons = Array.from(tabsRoot.querySelectorAll('[data-ss-tab-target]'));
+        const panels = Array.from(tabsRoot.querySelectorAll('[data-ss-tab-panel]'));
+        const activateTab = (target) => {
+          buttons.forEach((button) => {
+            const isActive = button.dataset.ssTabTarget === target;
+            button.classList.toggle('is-active', isActive);
+            button.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          });
+
+          panels.forEach((panel) => {
+            const isActive = panel.dataset.ssTabPanel === target;
+            panel.classList.toggle('is-active', isActive);
+            panel.hidden = !isActive;
+          });
+        };
+
+        buttons.forEach((button) => {
+          button.addEventListener('click', () => activateTab(button.dataset.ssTabTarget));
+        });
+
+        const rawDescription = tabsRoot.querySelector('[data-ss-raw-description]');
+        if (!rawDescription) return;
+
+        const source = document.createElement('div');
+        source.innerHTML = rawDescription.innerHTML;
+
+        const buckets = {
+          description: [],
+          ingredients: [],
+          how: []
+        };
+        let currentBucket = 'description';
+        let hasStructuredSections = false;
+
+        const createParagraph = (text) => {
+          const paragraph = document.createElement('p');
+          paragraph.textContent = text.trim();
+          return paragraph;
+        };
+
+        Array.from(source.children).forEach((node) => {
+          const label = (node.textContent || '').trim().toLowerCase();
+          const isHeading = /^h[1-6]$/i.test(node.tagName);
+
+          if (isHeading && label.includes('ingredient')) {
+            hasStructuredSections = true;
+            currentBucket = 'ingredients';
+            return;
+          }
+
+          if (isHeading && (label.includes('how to use') || label.includes('directions'))) {
+            hasStructuredSections = true;
+            currentBucket = 'how';
+            return;
+          }
+
+          if (label) buckets[currentBucket].push(node.cloneNode(true));
+        });
+
+        if (!hasStructuredSections) {
+          const fullText = (source.textContent || '').replace(/\s+/g, ' ').trim();
+          const lowerText = fullText.toLowerCase();
+          const ingredientsIndex = lowerText.indexOf('ingredients');
+          const howIndex = lowerText.indexOf('how to use');
+
+          if (ingredientsIndex > -1) {
+            const descriptionText = fullText.slice(0, ingredientsIndex).trim();
+            const ingredientsStart = ingredientsIndex + 'ingredients'.length;
+            const ingredientsEnd = howIndex > ingredientsIndex ? howIndex : fullText.length;
+            const ingredientsText = fullText.slice(ingredientsStart, ingredientsEnd).trim();
+            const howText = howIndex > -1 ? fullText.slice(howIndex + 'how to use'.length).trim() : '';
+
+            buckets.description = descriptionText ? [createParagraph(descriptionText)] : buckets.description;
+            buckets.ingredients = ingredientsText ? [createParagraph(ingredientsText)] : buckets.ingredients;
+            buckets.how = howText ? [createParagraph(howText)] : buckets.how;
+          }
+        }
+
+        const setContent = (key, nodes, minimumLength = 0) => {
+          const content = tabsRoot.querySelector(`[data-ss-tab-content="${key}"]`);
+          const text = nodes.map((node) => node.textContent || '').join(' ').trim();
+
+          if (
+            !content
+            || content.querySelector('[data-ss-custom-content="true"]')
+            || !nodes.length
+            || text.length < minimumLength
+          )
+            return;
+
+          content.replaceChildren(...nodes);
+        };
+
+        setContent('description', buckets.description, 4);
+        setContent('ingredients', buckets.ingredients, 8);
+        setContent('how', buckets.how, 8);
+      })();
+
+      (() => {
+        const root = document.getElementById('MainProduct-{{ section.id }}');
+        const dock = root?.querySelector('.ss-product-purchase-dock');
+        const dockHost = dock?.closest('product-form') || dock;
+
+        if (!root || !dock || typeof window.matchMedia !== 'function') return;
+
+        const mediaQuery = window.matchMedia('(max-width: 749px)');
+        const marker = document.createElement('div');
+        marker.className = 'ss-product-purchase-dock-marker';
+        marker.setAttribute('aria-hidden', 'true');
+        const originalParent = dockHost.parentNode;
+        const originalNextSibling = dockHost.nextSibling;
+        let animationFrame = null;
+        let isFloating = false;
+
+        if (originalParent && !marker.isConnected) {
+          originalParent.insertBefore(marker, dockHost);
+        }
+
+        const getDockHeight = () => Math.ceil(dock.getBoundingClientRect().height || dock.offsetHeight || 0);
+
+        const syncMarkerHeight = () => {
+          if (!mediaQuery.matches || !isFloating) {
+            marker.style.height = '';
+            marker.classList.remove('is-active');
+            return;
+          }
+
+          const dockHeight = getDockHeight();
+          marker.style.height = dockHeight > 0 ? `${dockHeight}px` : '';
+          marker.classList.add('is-active');
+        };
+
+        const restoreDock = () => {
+          if (!isFloating) return;
+
+          isFloating = false;
+          dock.classList.remove('ss-product-purchase-dock--floating');
+          root.classList.remove('ss-product-page--dock-floating');
+
+          if (originalParent && dockHost.parentNode !== originalParent) {
+            originalParent.insertBefore(dockHost, marker.nextSibling || originalNextSibling);
+          }
+
+          syncMarkerHeight();
+        };
+
+        const floatDock = () => {
+          if (isFloating) {
+            syncMarkerHeight();
+            return;
+          }
+
+          isFloating = true;
+          syncMarkerHeight();
+          dock.classList.add('ss-product-purchase-dock--floating');
+          root.classList.add('ss-product-page--dock-floating');
+
+          if (dockHost.parentNode !== document.body) {
+            document.body.appendChild(dockHost);
+          }
+        };
+
+        const updateDock = () => {
+          animationFrame = null;
+
+          const isMobile = mediaQuery.matches;
+
+          root.classList.toggle('ss-product-page--mobile-dock', isMobile);
+
+          if (!isMobile) {
+            restoreDock();
+            return;
+          }
+
+          const dockHeight = getDockHeight() || 96;
+          const inlineReference = isFloating ? marker : dock;
+          const inlineTop = inlineReference.getBoundingClientRect().top;
+          const viewportHeight = window.visualViewport?.height || window.innerHeight || document.documentElement.clientHeight;
+          const restorePoint = viewportHeight - dockHeight - 24;
+          const hysteresis = 36;
+          const shouldFloat = inlineTop > restorePoint + hysteresis;
+
+          if (isFloating) {
+            if (inlineTop <= restorePoint) {
+              restoreDock();
+            } else {
+              syncMarkerHeight();
+            }
+            return;
+          }
+
+          if (shouldFloat) {
+            floatDock();
+          }
+        };
+
+        const requestDockUpdate = () => {
+          if (animationFrame) return;
+          animationFrame = window.requestAnimationFrame(updateDock);
+        };
+
+        requestDockUpdate();
+        window.addEventListener('scroll', requestDockUpdate, { passive: true });
+        window.addEventListener('resize', requestDockUpdate, { passive: true });
+        window.addEventListener('load', requestDockUpdate, { once: true });
+        window.visualViewport?.addEventListener('resize', requestDockUpdate, { passive: true });
+        window.visualViewport?.addEventListener('scroll', requestDockUpdate, { passive: true });
+
+        root.querySelectorAll('img').forEach((image) => {
+          if (image.complete) return;
+          image.addEventListener('load', requestDockUpdate, { once: true });
+        });
+
+        if ('ResizeObserver' in window) {
+          const resizeObserver = new ResizeObserver(requestDockUpdate);
+          resizeObserver.observe(root);
+          resizeObserver.observe(marker);
+        }
+
+        window.setTimeout(requestDockUpdate, 120);
+        window.setTimeout(requestDockUpdate, 480);
+
+        if (typeof mediaQuery.addEventListener === 'function') {
+          mediaQuery.addEventListener('change', requestDockUpdate);
+        } else if (typeof mediaQuery.addListener === 'function') {
+          mediaQuery.addListener(requestDockUpdate);
+        }
+      })();
+    </script>
 
     {% render 'product-media-modal', variant_images: variant_images %}
 
