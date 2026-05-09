@@ -23,14 +23,14 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "A thoughtful line of communication, designed with the same care as the products.",
-            "heading_size": "hxxl"
+            "heading": "Contact Seventhsense",
+            "heading_size": "hxl"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Whether you need order help, ritual guidance, or a product recommendation, the contact page should feel as calm and considered as the rest of the brand.</p>"
+            "text": "<p>Order help, ritual guidance, and direct support in one clear place.</p>"
           }
         }
       },
@@ -40,85 +40,8 @@
         "content_alignment": "center",
         "color_scheme": "scheme-1",
         "full_width": true,
-        "padding_top": 72,
-        "padding_bottom": 36
-      }
-    },
-    "contact_banner": {
-      "type": "image-banner",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Reach out in the way that feels most natural.",
-            "heading_size": "hxl"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "Add a full-width brand image here to create the same editorial, immersive feeling used on Our Story.",
-            "text_style": "subtitle"
-          }
-        }
-      },
-      "block_order": ["heading", "text"],
-      "settings": {
-        "image": "",
-        "image_2": "",
-        "image_overlay_opacity": 20,
-        "image_height": "medium",
-        "image_behavior": "fixed",
-        "desktop_content_position": "bottom-left",
-        "desktop_content_alignment": "left",
-        "show_text_box": false,
-        "color_scheme": "scheme-1",
-        "stack_images_on_mobile": true,
-        "mobile_content_alignment": "left",
-        "show_text_below": false
-      }
-    },
-    "contact_story": {
-      "type": "image-with-text",
-      "blocks": {
-        "caption": {
-          "type": "caption",
-          "settings": {
-            "caption": "Customer care",
-            "text_style": "caption-with-letter-spacing",
-            "text_size": "medium"
-          }
-        },
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "The contact experience should feel closer to concierge care than a generic inbox.",
-            "heading_size": "h1"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Use this section to explain what people can contact you about: shipping questions, rituals, gifting, collaboration requests, or guidance on choosing the right product for their routine.</p>",
-            "text_style": "body"
-          }
-        }
-      },
-      "block_order": ["caption", "heading", "text"],
-      "settings": {
-        "image": "",
-        "height": "large",
-        "desktop_image_width": "medium",
-        "layout": "image_first",
-        "image_behavior": "zoom-in",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "middle",
-        "desktop_content_alignment": "left",
-        "mobile_content_alignment": "left",
-        "section_color_scheme": "scheme-1",
-        "color_scheme": "scheme-1",
-        "padding_top": 56,
-        "padding_bottom": 32
+        "padding_top": 36,
+        "padding_bottom": 16
       }
     },
     "contact_details": {
@@ -207,10 +130,10 @@
         "intro": "<p>Add your phone number, email, response window, and social channels here. Everything in this section is editable in the Theme Editor.</p>",
         "social_label": "Social platforms",
         "social_heading": "Stay close to the brand.",
-        "social_copy": "Use these links for launches, rituals, and quiet updates from the studio.",
+        "social_copy": "Quick links for direct contact and brand updates.",
         "color_scheme": "scheme-1",
-        "padding_top": 24,
-        "padding_bottom": 56
+        "padding_top": 8,
+        "padding_bottom": 24
       }
     },
     "contact_form": {
@@ -219,15 +142,13 @@
         "heading": "Send a note",
         "heading_size": "h1",
         "color_scheme": "scheme-1",
-        "padding_top": 16,
-        "padding_bottom": 88
+        "padding_top": 0,
+        "padding_bottom": 28
       }
     }
   },
   "order": [
     "contact_intro",
-    "contact_banner",
-    "contact_story",
     "contact_details",
     "contact_form"
   ]

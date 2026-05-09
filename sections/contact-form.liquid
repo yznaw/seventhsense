@@ -12,6 +12,49 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  .ss-contact-section {
+    padding-bottom: 2rem;
+  }
+
+  .ss-contact-section .contact {
+    max-width: 132rem;
+  }
+
+  .ss-contact-section .title {
+    margin-bottom: 1.8rem;
+    text-align: center;
+  }
+
+  .ss-contact-section form {
+    display: grid;
+    gap: 1.4rem;
+  }
+
+  .ss-contact-section .contact__fields {
+    display: grid;
+    gap: 1.2rem;
+  }
+
+  .ss-contact-section .field__input,
+  .ss-contact-section .text-area {
+    min-height: 4.8rem;
+  }
+
+  .ss-contact-section .text-area {
+    min-height: 12rem;
+  }
+
+  .ss-contact-section .contact__button {
+    margin-top: 0.4rem;
+    text-align: center;
+  }
+
+  @media screen and (min-width: 990px) {
+    .ss-contact-section .contact__fields {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
 {%- endstyle -%}
 
 <div class="ss-contact-section">
@@ -98,23 +141,23 @@
             </small>
           {%- endif -%}
         </div>
-      </div>
-      <div class="field">
-        <input
-          type="tel"
-          id="ContactForm-phone"
-          class="field__input"
-          autocomplete="tel"
-          name="contact[{{ 'templates.contact.form.phone' | t }}]"
-          pattern="[0-9\-]*"
-          value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
-          placeholder="{{ 'templates.contact.form.phone' | t }}"
-        >
-        <label class="field__label" for="ContactForm-phone">{{ 'templates.contact.form.phone' | t }}</label>
+        <div class="field">
+          <input
+            type="tel"
+            id="ContactForm-phone"
+            class="field__input"
+            autocomplete="tel"
+            name="contact[{{ 'templates.contact.form.phone' | t }}]"
+            pattern="[0-9\\-]*"
+            value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+            placeholder="{{ 'templates.contact.form.phone' | t }}"
+          >
+          <label class="field__label" for="ContactForm-phone">{{ 'templates.contact.form.phone' | t }}</label>
+        </div>
       </div>
       <div class="field">
         <textarea
-          rows="10"
+          rows="5"
           id="ContactForm-body"
           class="text-area field__input"
           name="contact[{{ 'templates.contact.form.comment' | t }}]"
