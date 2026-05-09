@@ -1,0 +1,3 @@
+# Keep local code pushes from overwriting store-managed theme settings
+# such as the uploaded logo saved through the Shopify theme editor.
+config/settings_data.json
