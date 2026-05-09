@@ -133,6 +133,9 @@
               >
                 {{ card_product.title | escape }}
               </a>
+              <span style="font-size: 0.75em; color: #575555;; font-weight: normal; display: block;">
+                    {{ card_product.variants.first.option1 }}
+                  </span>
             </h3>
           </div>
           <div class="card__badge {{ settings.badge_position }}">
@@ -237,6 +240,9 @@
             >
               {{ card_product.title | escape }}
             </a>
+            <span style="font-size: 0.75em; color: #575555;; font-weight: normal; display: block;">
+                    {{ card_product.variants.first.option1 }}
+                  </span>
           </h3>
           <div class="card-information">
             {%- if show_vendor -%}
@@ -754,6 +760,9 @@
             <a role="link" aria-disabled="true" class="full-unstyled-link">
               {{ 'onboarding.product_title' | t }}
             </a>
+              <span style="font-size: 0.75em; color: #575555;; font-weight: normal; display: block;">
+                    {{ card_product.variants.first.option1 }}
+                  </span>
           </h3>
           <div class="card-information">
             {%- if show_vendor -%}
