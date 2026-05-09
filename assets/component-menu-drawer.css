@@ -390,7 +390,7 @@ details[open].menu-opening > .menu-drawer__submenu {
 
 .ss-site-header .menu-drawer__menu > li > a::before,
 .ss-site-header .menu-drawer__menu > li > details > summary::before {
-  content: counter(ss-menu-item, decimal-leading-zero);
+  /* content: counter(ss-menu-item, decimal-leading-zero); */
   position: absolute;
   left: 1.4rem;
   top: 50%;
@@ -641,11 +641,11 @@ details[open].menu-opening > .menu-drawer__submenu {
 
   .ss-site-header .menu-drawer__menu-item {
     min-height: 6.4rem;
-    padding: 1.5rem 0.8rem 1.5rem 5.4rem;
+    padding: 1.5rem 0.8rem 1.5rem 1.4rem;
     border-radius: 0;
     background: transparent;
     box-shadow: none;
-    font-size: clamp(3rem, 5vw, 4.2rem);
+    font-size: clamp(2.4rem, 5vw, 4.2rem);
   }
 
   .ss-site-header .menu-drawer__menu > li > a::before,
