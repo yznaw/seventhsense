@@ -6,6 +6,29 @@
 {% endcomment %}
 
 <header-drawer data-breakpoint="{% if section.settings.menu_type_desktop == 'drawer' %}desktop{% else %}tablet{% endif %}">
+  {%- liquid
+    assign has_drawer_socials = false
+    assign drawer_logo_alt = settings.logo.alt | default: shop.name
+    if settings.social_twitter_link != blank
+      assign has_drawer_socials = true
+    elsif settings.social_facebook_link != blank
+      assign has_drawer_socials = true
+    elsif settings.social_pinterest_link != blank
+      assign has_drawer_socials = true
+    elsif settings.social_instagram_link != blank
+      assign has_drawer_socials = true
+    elsif settings.social_tiktok_link != blank
+      assign has_drawer_socials = true
+    elsif settings.social_tumblr_link != blank
+      assign has_drawer_socials = true
+    elsif settings.social_snapchat_link != blank
+      assign has_drawer_socials = true
+    elsif settings.social_youtube_link != blank
+      assign has_drawer_socials = true
+    elsif settings.social_vimeo_link != blank
+      assign has_drawer_socials = true
+    endif
+  -%}
   <details id="Details-menu-drawer-container" class="menu-drawer-container">
     <summary
       class="header__icon header__icon--menu header__icon--summary link focus-inset"
@@ -19,6 +42,25 @@
     <div id="menu-drawer" class="gradient menu-drawer motion-reduce color-{{ section.settings.menu_color_scheme }}">
       <div class="menu-drawer__inner-container">
         <div class="menu-drawer__navigation-container">
+          <div class="menu-drawer__panel-head">
+            <div class="menu-drawer__brand">
+              {%- if settings.logo != blank -%}
+                {{
+                  settings.logo
+                  | image_url: width: 220
+                  | image_tag:
+                    class: 'menu-drawer__brand-logo',
+                    widths: '120, 160, 220',
+                    loading: 'lazy',
+                    alt: drawer_logo_alt
+                }}
+              {%- else -%}
+                <span class="menu-drawer__brand-name">{{ shop.name }}</span>
+              {%- endif -%}
+            </div>
+            <p class="menu-drawer__eyebrow">Navigation</p>
+            <p class="menu-drawer__intro">Explore the collection, our story, and ways to connect.</p>
+          </div>
           <nav class="menu-drawer__navigation">
             <ul class="menu-drawer__menu has-submenu list-menu" role="list">
               {%- for link in section.settings.menu.links -%}
@@ -136,6 +178,9 @@
             </ul>
           </nav>
           <div class="menu-drawer__utility-links">
+            {%- if has_drawer_socials -%}
+              <p class="menu-drawer__utility-label">Follow Seventhsense</p>
+            {%- endif -%}
             {%- if localization.available_countries or localization.available_languages -%}
               <div class="menu-drawer__localization header-localization">
                 {%- if localization.available_countries and localization.available_countries.size > 1 -%}
