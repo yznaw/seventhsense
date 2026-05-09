@@ -271,12 +271,12 @@
     }
 
     .contact-details__grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 1.8rem;
     }
 
     .contact-details__social-list {
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
     .contact-details__item {
@@ -332,6 +332,15 @@
                     {%- if block.settings.value_text != blank -%}
                       <p class="contact-details__value">
                         <a href="tel:{{ block.settings.value_text | strip | replace: ' ', '' }}">
+                          {{ block.settings.value_text | escape }}
+                        </a>
+                      </p>
+                    {%- endif -%}
+                  {%- when 'whatsapp' -%}
+                    {%- if block.settings.value_text != blank -%}
+                      {%- assign whatsapp_number = block.settings.value_text | strip | replace: ' ', '' | replace: '+', '' -%}
+                      <p class="contact-details__value">
+                        <a href="https://wa.me/{{ whatsapp_number }}" target="_blank" rel="noopener noreferrer">
                           {{ block.settings.value_text | escape }}
                         </a>
                       </p>
@@ -540,6 +549,10 @@
               "label": "Email"
             },
             {
+              "value": "whatsapp",
+              "label": "WhatsApp"
+            },
+            {
               "value": "hours",
               "label": "Hours"
             },
@@ -616,6 +629,15 @@
         {
           "type": "detail",
           "settings": {
+            "detail_type": "whatsapp",
+            "label": "WhatsApp",
+            "value_text": "+974 5555 5555",
+            "note": "Fast replies for quick order and support questions."
+          }
+        },
+        {
+          "type": "detail",
+          "settings": {
             "detail_type": "email",
             "label": "Email",
             "value_text": "care@seventhsense.com",
@@ -634,14 +656,6 @@
         },
         {
           "type": "social"
-        },
-        {
-          "type": "social",
-          "settings": {
-            "platform": "WhatsApp",
-            "handle": "+974 5555 5555",
-            "copy": "Direct messages for quick order and support questions."
-          }
         },
         {
           "type": "social",

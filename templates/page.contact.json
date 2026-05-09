@@ -22,6 +22,16 @@
             "note": "Available for order support and product guidance."
           }
         },
+        "detail_whatsapp": {
+          "type": "detail",
+          "settings": {
+            "detail_type": "whatsapp",
+            "label": "WhatsApp",
+            "value_text": "+97477484004",
+            "value_richtext": "<p>Sunday to Thursday</p><p>10 AM - 6 PM</p>",
+            "note": "Fast replies for quick order and support questions."
+          }
+        },
         "detail_email": {
           "type": "detail",
           "settings": {
@@ -40,15 +50,6 @@
             "value_text": "",
             "value_richtext": "<p>Sunday to Thursday</p><p>9 AM - 6 PM</p>",
             "note": "We reply as quickly as we can during business hours."
-          }
-        },
-        "social_whatsapp": {
-          "type": "social",
-          "settings": {
-            "platform": "WhatsApp",
-            "handle": "+97477484004",
-            "url": "",
-            "copy": "Direct messages for quick order and support questions."
           }
         },
         "social_facebook": {
@@ -90,9 +91,9 @@
       },
       "block_order": [
         "detail_phone",
+        "detail_whatsapp",
         "detail_email",
         "detail_hours",
-        "social_whatsapp",
         "social_facebook",
         "social_instagram",
         "social_snapchat",
