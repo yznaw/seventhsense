@@ -1,0 +1,394 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .story-timeline-{{ section.id }} {
+    position: relative;
+    overflow: clip;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(250, 246, 242, 0.88));
+  }
+
+  .story-timeline-{{ section.id }}::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at top left, rgba(231, 212, 196, 0.34), transparent 34%),
+      radial-gradient(circle at bottom right, rgba(214, 196, 181, 0.24), transparent 28%);
+    pointer-events: none;
+  }
+
+  .story-timeline-{{ section.id }} .page-width {
+    position: relative;
+    z-index: 1;
+    max-width: 132rem;
+  }
+
+  .story-timeline__header {
+    max-width: 76rem;
+    margin: 0 auto clamp(3.2rem, 6vw, 7.2rem);
+    text-align: center;
+  }
+
+  .story-timeline__eyebrow {
+    margin: 0 0 1.4rem;
+    color: rgba(23, 19, 17, 0.56);
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+
+  .story-timeline__heading {
+    margin: 0;
+    color: #171311;
+    font-size: clamp(3.8rem, 7vw, 7rem);
+    font-weight: 400;
+    line-height: 0.98;
+    letter-spacing: 0;
+  }
+
+  .story-timeline__intro {
+    margin: 1.8rem auto 0;
+    max-width: 60rem;
+    color: rgba(23, 19, 17, 0.7);
+    font-size: clamp(1.55rem, 2vw, 1.9rem);
+    line-height: 1.75;
+  }
+
+  .story-timeline__track {
+    position: relative;
+    display: grid;
+    gap: clamp(2.4rem, 4vw, 4.4rem);
+  }
+
+  .story-timeline__track::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    background: linear-gradient(
+      180deg,
+      rgba(120, 92, 73, 0) 0%,
+      rgba(120, 92, 73, 0.34) 12%,
+      rgba(120, 92, 73, 0.34) 88%,
+      rgba(120, 92, 73, 0) 100%
+    );
+    transform: translateX(-50%);
+  }
+
+  .story-timeline__item {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.6rem;
+    align-items: center;
+  }
+
+  .story-timeline__item::before {
+    content: '';
+    position: absolute;
+    top: 3rem;
+    left: 50%;
+    width: 1.4rem;
+    height: 1.4rem;
+    border: 0.25rem solid rgba(255, 255, 255, 0.82);
+    border-radius: 999px;
+    background: #7b5c49;
+    box-shadow: 0 0 0 0.55rem rgba(123, 92, 73, 0.12);
+    transform: translateX(-50%);
+  }
+
+  .story-timeline__media,
+  .story-timeline__content {
+    min-width: 0;
+  }
+
+  .story-timeline__figure {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.54);
+    box-shadow:
+      0 24px 54px rgba(23, 19, 17, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.76);
+  }
+
+  .story-timeline__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+
+  .story-timeline__image-placeholder {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 4 / 5;
+    background:
+      linear-gradient(180deg, rgba(244, 235, 227, 0.92), rgba(233, 220, 208, 0.78));
+  }
+
+  .story-timeline__card {
+    padding: clamp(2.2rem, 3vw, 3.4rem);
+    border: 1px solid rgba(23, 19, 17, 0.08);
+    border-radius: 8px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 249, 245, 0.7));
+    box-shadow:
+      0 24px 54px rgba(23, 19, 17, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(16px) saturate(1.08);
+    -webkit-backdrop-filter: blur(16px) saturate(1.08);
+  }
+
+  .story-timeline__year {
+    margin: 0 0 1.4rem;
+    color: rgba(123, 92, 73, 0.95);
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .story-timeline__description {
+    color: rgba(23, 19, 17, 0.76);
+    font-size: clamp(1.52rem, 1.5vw, 1.82rem);
+    line-height: 1.8;
+  }
+
+  .story-timeline__description > *:first-child {
+    margin-top: 0;
+  }
+
+  .story-timeline__description > *:last-child {
+    margin-bottom: 0;
+  }
+
+  @media screen and (min-width: 990px) {
+    .story-timeline__item {
+      grid-template-columns: minmax(0, 1fr) 8rem minmax(0, 1fr);
+      gap: clamp(2rem, 4vw, 5.2rem);
+    }
+
+    .story-timeline__item--right .story-timeline__media {
+      grid-column: 1;
+    }
+
+    .story-timeline__item--right .story-timeline__content {
+      grid-column: 3;
+    }
+
+    .story-timeline__item--left .story-timeline__media {
+      grid-column: 3;
+    }
+
+    .story-timeline__item--left .story-timeline__content {
+      grid-column: 1;
+      grid-row: 1;
+    }
+  }
+
+  @media screen and (max-width: 989px) {
+    .story-timeline__track::before {
+      left: 2rem;
+      transform: none;
+    }
+
+    .story-timeline__item {
+      padding-left: 4.4rem;
+    }
+
+    .story-timeline__item::before {
+      left: 2rem;
+      transform: translateX(-50%);
+    }
+  }
+{%- endstyle -%}
+
+<div class="story-timeline-{{ section.id }} color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
+  <div class="page-width">
+    <div class="story-timeline__header">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="story-timeline__eyebrow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {{ section.settings.eyebrow | escape }}
+        </p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="story-timeline__heading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          {{ section.settings.heading }}
+        </h2>
+      {%- endif -%}
+      {%- if section.settings.intro != blank -%}
+        <div class="story-timeline__intro rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {{ section.settings.intro }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="story-timeline__track">
+      {%- for block in section.blocks -%}
+        {%- assign alignment = 'right' -%}
+        {%- assign item_remainder = forloop.index0 | modulo: 2 -%}
+        {%- if item_remainder == 1 -%}
+          {%- assign alignment = 'left' -%}
+        {%- endif -%}
+
+        <article
+          class="story-timeline__item story-timeline__item--{{ alignment }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          <div class="story-timeline__media">
+            <figure class="story-timeline__figure">
+              {%- if block.settings.image != blank -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 1200
+                  | image_tag:
+                    class: 'story-timeline__image',
+                    widths: '360, 540, 720, 900, 1200',
+                    sizes: '(min-width: 990px) 38vw, calc(100vw - 6rem)',
+                    loading: 'lazy'
+                }}
+              {%- else -%}
+                <div class="story-timeline__image-placeholder">
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
+                </div>
+              {%- endif -%}
+            </figure>
+          </div>
+
+          <div class="story-timeline__content">
+            <div class="story-timeline__card">
+              {%- if block.settings.year != blank -%}
+                <p class="story-timeline__year">{{ block.settings.year | escape }}</p>
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                <div class="story-timeline__description rte">
+                  {{ block.settings.description }}
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Story Timeline",
+  "tag": "section",
+  "class": "section section-our-story-timeline",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The path"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Built slowly, with attention."
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro",
+      "default": "<p>Use this section to map the moments, years, and ideas that shaped the brand.</p>"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "milestone",
+      "name": "Milestone",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "year",
+          "label": "Year",
+          "default": "2024"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Tell the story of what happened in this chapter and why it matters.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Story Timeline",
+      "blocks": [
+        {
+          "type": "milestone"
+        },
+        {
+          "type": "milestone"
+        },
+        {
+          "type": "milestone"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

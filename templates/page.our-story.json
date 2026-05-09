@@ -9,7 +9,7 @@
  */
 {
   "sections": {
-    "story_hero": {
+    "story_intro": {
       "type": "rich-text",
       "blocks": {
         "caption": {
@@ -23,38 +23,68 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Self care shaped by quiet, daily intention.",
+            "heading": "A slower, more intentional kind of self care.",
+            "heading_size": "hxxl"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Seventhsense began with a quiet conviction: body care should feel considered, tactile, and beautiful enough to return to every day.</p>"
+          }
+        }
+      },
+      "block_order": ["caption", "heading", "text"],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-1",
+        "full_width": true,
+        "padding_top": 96,
+        "padding_bottom": 36
+      }
+    },
+    "story_banner_one": {
+      "type": "image-banner",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Care begins in the pause.",
             "heading_size": "hxl"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Seventhsense began with a simple belief: care should feel beautiful, useful, and easy to return to every day.</p>"
+            "text": "Use this image to set the emotional tone of the story.",
+            "text_style": "subtitle"
           }
         }
       },
-      "block_order": [
-        "caption",
-        "heading",
-        "text"
-      ],
+      "block_order": ["heading", "text"],
       "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
+        "image": "",
+        "image_2": "",
+        "image_overlay_opacity": 20,
+        "image_height": "large",
+        "image_behavior": "fixed",
+        "desktop_content_position": "bottom-left",
+        "desktop_content_alignment": "left",
+        "show_text_box": false,
         "color_scheme": "scheme-1",
-        "full_width": true,
-        "padding_top": 72,
-        "padding_bottom": 24
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "left",
+        "show_text_below": false
       }
     },
-    "story_intro": {
+    "story_chapter_one": {
       "type": "image-with-text",
       "blocks": {
         "caption": {
           "type": "caption",
           "settings": {
-            "caption": "The ritual",
+            "caption": "Chapter one",
             "text_style": "caption-with-letter-spacing",
             "text_size": "medium"
           }
@@ -62,23 +92,19 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Made for the moments between everything else.",
+            "heading": "The ritual was shaped around real routines, not fantasy ones.",
             "heading_size": "h1"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>We create body care with soft textures, grounded scents, and formulas designed to make ordinary routines feel considered.</p>",
+            "text": "<p>We started with the small moments people return to most: after a shower, before leaving the house, at the end of a long day. The formulas were built to feel effortless in those spaces.</p>",
             "text_style": "body"
           }
         }
       },
-      "block_order": [
-        "caption",
-        "heading",
-        "text"
-      ],
+      "block_order": ["caption", "heading", "text"],
       "settings": {
         "image": "",
         "height": "large",
@@ -91,70 +117,17 @@
         "mobile_content_alignment": "left",
         "section_color_scheme": "scheme-1",
         "color_scheme": "scheme-1",
-        "padding_top": 28,
-        "padding_bottom": 36
+        "padding_top": 64,
+        "padding_bottom": 40
       }
     },
-    "story_values": {
-      "type": "multicolumn",
-      "blocks": {
-        "value_one": {
-          "type": "column",
-          "settings": {
-            "title": "Intentional formulas",
-            "text": "<p>We focus on products that earn their place in a daily routine.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "value_two": {
-          "type": "column",
-          "settings": {
-            "title": "Textures that invite return",
-            "text": "<p>Each formula is shaped around touch, absorption, and finish.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "value_three": {
-          "type": "column",
-          "settings": {
-            "title": "A softer pace",
-            "text": "<p>Our world is calm, tactile, and made for everyday rituals.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "value_one",
-        "value_two",
-        "value_three"
-      ],
-      "settings": {
-        "title": "What guides us",
-        "heading_size": "h1",
-        "image_width": "third",
-        "image_ratio": "adapt",
-        "button_label": "",
-        "button_link": "",
-        "columns_desktop": 3,
-        "column_alignment": "left",
-        "background_style": "none",
-        "color_scheme": "scheme-1",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "story_timeline": {
-      "type": "rich-text",
+    "story_chapter_two": {
+      "type": "image-with-text",
       "blocks": {
         "caption": {
           "type": "caption",
           "settings": {
-            "caption": "The path",
+            "caption": "Chapter two",
             "text_style": "caption-with-letter-spacing",
             "text_size": "medium"
           }
@@ -162,36 +135,143 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Built slowly, with attention.",
+            "heading": "Texture, scent, and finish became part of the story.",
             "heading_size": "h1"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p><strong>Beginning</strong><br/>A simple observation: self care works best when it feels natural enough to repeat.</p><p><strong>Now</strong><br/>A growing ritual collection of body oils, mists, scrubs, and essentials designed as one quiet system.</p>"
+            "text": "<p>Each product was designed to leave a distinct impression: skin that feels softened rather than coated, scent that sits close, and a routine that feels elevated without becoming complicated.</p>",
+            "text_style": "body"
           }
         }
       },
-      "block_order": [
-        "caption",
-        "heading",
-        "text"
-      ],
+      "block_order": ["caption", "heading", "text"],
+      "settings": {
+        "image": "",
+        "height": "large",
+        "desktop_image_width": "medium",
+        "layout": "text_first",
+        "image_behavior": "zoom-in",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "scheme-1",
+        "color_scheme": "scheme-1",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "story_mission": {
+      "type": "rich-text",
+      "blocks": {
+        "caption": {
+          "type": "caption",
+          "settings": {
+            "caption": "Brand mission",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "To make everyday care feel grounded, sensual, and worth returning to.",
+            "heading_size": "hxl"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We believe the strongest rituals are the ones that fold naturally into life. The goal is not excess. It is rhythm, softness, and a product experience that stays with you.</p>"
+          }
+        }
+      },
+      "block_order": ["caption", "heading", "text"],
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "center",
         "color_scheme": "scheme-1",
         "full_width": false,
-        "padding_top": 36,
-        "padding_bottom": 80
+        "padding_top": 56,
+        "padding_bottom": 56
+      }
+    },
+    "story_timeline": {
+      "type": "our-story-timeline",
+      "blocks": {
+        "milestone_one": {
+          "type": "milestone",
+          "settings": {
+            "image": "",
+            "year": "The beginning",
+            "description": "<p>The story began with a desire to create body care that felt at home inside real, repeated routines.</p>"
+          }
+        },
+        "milestone_two": {
+          "type": "milestone",
+          "settings": {
+            "image": "",
+            "year": "The collection",
+            "description": "<p>Oils, mists, scrubs, and essentials took shape as a connected ritual system rather than standalone products.</p>"
+          }
+        },
+        "milestone_three": {
+          "type": "milestone",
+          "settings": {
+            "image": "",
+            "year": "Today",
+            "description": "<p>Seventhsense continues to grow through a refined approach to texture, atmosphere, and the quiet luxury of repetition.</p>"
+          }
+        }
+      },
+      "block_order": ["milestone_one", "milestone_two", "milestone_three"],
+      "settings": {
+        "eyebrow": "The path",
+        "heading": "Built slowly, with attention.",
+        "intro": "<p>Add, remove, or reorder milestones from the Theme Editor to shape the brand story over time.</p>",
+        "color_scheme": "scheme-1",
+        "padding_top": 64,
+        "padding_bottom": 72
+      }
+    },
+    "story_banner_two": {
+      "type": "image-banner",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "A story still unfolding.",
+            "heading_size": "h1"
+          }
+        }
+      },
+      "block_order": ["heading"],
+      "settings": {
+        "image": "",
+        "image_2": "",
+        "image_overlay_opacity": 30,
+        "image_height": "medium",
+        "image_behavior": "fixed",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "scheme-1",
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
       }
     }
   },
   "order": [
-    "story_hero",
     "story_intro",
-    "story_values",
-    "story_timeline"
+    "story_banner_one",
+    "story_chapter_one",
+    "story_chapter_two",
+    "story_mission",
+    "story_timeline",
+    "story_banner_two"
   ]
 }

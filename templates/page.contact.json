@@ -9,13 +9,13 @@
  */
 {
   "sections": {
-    "contact_hero": {
+    "contact_intro": {
       "type": "rich-text",
       "blocks": {
         "caption": {
           "type": "caption",
           "settings": {
-            "caption": "Contact us",
+            "caption": "Contact",
             "text_style": "caption-with-letter-spacing",
             "text_size": "medium"
           }
@@ -23,22 +23,18 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "We are here for your rituals.",
-            "heading_size": "hxl"
+            "heading": "A thoughtful line of communication, designed with the same care as the products.",
+            "heading_size": "hxxl"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Questions about an order, a formula, or choosing the right ritual? Send us a note and our care team will reply with calm, useful guidance.</p>"
+            "text": "<p>Whether you need order help, ritual guidance, or a product recommendation, the contact page should feel as calm and considered as the rest of the brand.</p>"
           }
         }
       },
-      "block_order": [
-        "caption",
-        "heading",
-        "text"
-      ],
+      "block_order": ["caption", "heading", "text"],
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "center",
@@ -48,73 +44,191 @@
         "padding_bottom": 36
       }
     },
-    "contact_methods": {
-      "type": "multicolumn",
+    "contact_banner": {
+      "type": "image-banner",
       "blocks": {
-        "email": {
-          "type": "column",
+        "heading": {
+          "type": "heading",
           "settings": {
-            "title": "Email",
-            "text": "<p>care@seventhsense.com</p>",
-            "link_label": "",
-            "link": ""
+            "heading": "Reach out in the way that feels most natural.",
+            "heading_size": "hxl"
           }
         },
-        "support": {
-          "type": "column",
+        "text": {
+          "type": "text",
           "settings": {
-            "title": "Response time",
-            "text": "<p>Usually within 1-2 business days.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "guidance": {
-          "type": "column",
-          "settings": {
-            "title": "Care guidance",
-            "text": "<p>Need help choosing a ritual? Tell us your skin feel, scent preference, and routine.</p>",
-            "link_label": "",
-            "link": ""
+            "text": "Add a full-width brand image here to create the same editorial, immersive feeling used on Our Story.",
+            "text_style": "subtitle"
           }
         }
       },
-      "block_order": [
-        "email",
-        "support",
-        "guidance"
-      ],
+      "block_order": ["heading", "text"],
       "settings": {
-        "title": "Thoughtful support, without the rush.",
-        "heading_size": "h1",
-        "image_width": "third",
-        "image_ratio": "adapt",
-        "button_label": "",
-        "button_link": "",
-        "columns_desktop": 3,
-        "column_alignment": "left",
-        "background_style": "none",
+        "image": "",
+        "image_2": "",
+        "image_overlay_opacity": 20,
+        "image_height": "medium",
+        "image_behavior": "fixed",
+        "desktop_content_position": "bottom-left",
+        "desktop_content_alignment": "left",
+        "show_text_box": false,
         "color_scheme": "scheme-1",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
+        "stack_images_on_mobile": true,
+        "mobile_content_alignment": "left",
+        "show_text_below": false
+      }
+    },
+    "contact_story": {
+      "type": "image-with-text",
+      "blocks": {
+        "caption": {
+          "type": "caption",
+          "settings": {
+            "caption": "Customer care",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "The contact experience should feel closer to concierge care than a generic inbox.",
+            "heading_size": "h1"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Use this section to explain what people can contact you about: shipping questions, rituals, gifting, collaboration requests, or guidance on choosing the right product for their routine.</p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": ["caption", "heading", "text"],
+      "settings": {
+        "image": "",
+        "height": "large",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "image_behavior": "zoom-in",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "scheme-1",
+        "color_scheme": "scheme-1",
+        "padding_top": 56,
+        "padding_bottom": 32
+      }
+    },
+    "contact_details": {
+      "type": "contact-details",
+      "blocks": {
+        "detail_phone": {
+          "type": "detail",
+          "settings": {
+            "detail_type": "phone",
+            "label": "Phone",
+            "value_text": "+974 5555 5555",
+            "value_richtext": "<p>Sunday to Thursday</p><p>10 AM - 6 PM</p>",
+            "note": "Available for order support and product guidance."
+          }
+        },
+        "detail_email": {
+          "type": "detail",
+          "settings": {
+            "detail_type": "email",
+            "label": "Email",
+            "value_text": "care@seventhsense.com",
+            "value_richtext": "<p>Sunday to Thursday</p><p>10 AM - 6 PM</p>",
+            "note": "Best for detailed questions, gifting, and routine recommendations."
+          }
+        },
+        "detail_hours": {
+          "type": "detail",
+          "settings": {
+            "detail_type": "hours",
+            "label": "Hours",
+            "value_text": "",
+            "value_richtext": "<p>Sunday to Thursday</p><p>10 AM - 6 PM</p>",
+            "note": "We reply as quickly as we can during business hours."
+          }
+        },
+        "social_instagram": {
+          "type": "social",
+          "settings": {
+            "platform": "Instagram",
+            "handle": "@seventhsense",
+            "url": "",
+            "copy": "Editorial imagery, launches, and daily ritual moments."
+          }
+        },
+        "social_whatsapp": {
+          "type": "social",
+          "settings": {
+            "platform": "WhatsApp",
+            "handle": "+974 5555 5555",
+            "url": "",
+            "copy": "Direct messages for quick order and support questions."
+          }
+        },
+        "social_facebook": {
+          "type": "social",
+          "settings": {
+            "platform": "Facebook",
+            "handle": "Seventhsense",
+            "url": "",
+            "copy": "Community updates, announcements, and customer touchpoints."
+          }
+        },
+        "social_snapchat": {
+          "type": "social",
+          "settings": {
+            "platform": "Snapchat",
+            "handle": "@seventhsense",
+            "url": "",
+            "copy": "Playful behind-the-scenes glimpses and quick brand moments."
+          }
+        },
+        "social_tiktok": {
+          "type": "social",
+          "settings": {
+            "platform": "TikTok",
+            "handle": "@seventhsense",
+            "url": "",
+            "copy": "Texture, motion, and short-form storytelling."
+          }
+        }
+      },
+      "block_order": ["detail_phone", "detail_email", "detail_hours", "social_whatsapp", "social_facebook", "social_instagram", "social_snapchat", "social_tiktok"],
+      "settings": {
+        "eyebrow": "Ways to connect",
+        "heading": "Every touchpoint, in one place.",
+        "intro": "<p>Add your phone number, email, response window, and social channels here. Everything in this section is editable in the Theme Editor.</p>",
+        "social_label": "Social platforms",
+        "social_heading": "Stay close to the brand.",
+        "social_copy": "Use these links for launches, rituals, and quiet updates from the studio.",
+        "color_scheme": "scheme-1",
         "padding_top": 24,
-        "padding_bottom": 24
+        "padding_bottom": 56
       }
     },
     "contact_form": {
       "type": "contact-form",
       "settings": {
-        "heading": "How can we help?",
+        "heading": "Send a note",
         "heading_size": "h1",
         "color_scheme": "scheme-1",
-        "padding_top": 24,
-        "padding_bottom": 80
+        "padding_top": 16,
+        "padding_bottom": 88
       }
     }
   },
   "order": [
-    "contact_hero",
-    "contact_methods",
+    "contact_intro",
+    "contact_banner",
+    "contact_story",
+    "contact_details",
     "contact_form"
   ]
 }

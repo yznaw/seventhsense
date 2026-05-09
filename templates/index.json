@@ -12,8 +12,9 @@
     "seventhsense_hero": {
       "type": "seventhsense-hero",
       "settings": {
+        "navigation_menu": "main-menu",
         "show_language_toggle": true,
-        "floating_logo": "",
+        "logo_image_url": "",
         "show_theme_logo": true,
         "brand_name": "Seventhsense",
         "eyebrow": "Premium skincare",
@@ -21,7 +22,7 @@
         "description": "<p>There are moments when the world grows quieter and something within you begins to settle. The breath slows, the senses soften, and the body returns to its natural rhythm.</p>",
         "cta_label": "Shop Now",
         "cta_link": "#ss-featured-products",
-        "hero_image": "",
+        "hero_video": "shopify://files/videos/2025-11-09-20-26-19-aeef2fb7.webm",
         "featured_product": "",
         "product_note_label": "Signature cream",
         "padding_top": 0,

@@ -1,0 +1,682 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .contact-details-{{ section.id }} {
+    position: relative;
+    overflow: clip;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(250, 245, 240, 0.9));
+  }
+
+  .contact-details-{{ section.id }}::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at top left, rgba(231, 212, 196, 0.3), transparent 32%),
+      radial-gradient(circle at bottom right, rgba(214, 196, 181, 0.24), transparent 28%);
+    pointer-events: none;
+  }
+
+  .contact-details-{{ section.id }} .page-width {
+    position: relative;
+    z-index: 1;
+    max-width: 132rem;
+  }
+
+  .contact-details__header {
+    max-width: 72rem;
+    margin: 0 auto clamp(3.2rem, 5vw, 6rem);
+    text-align: center;
+  }
+
+  .contact-details__eyebrow {
+    margin: 0 0 1.4rem;
+    color: rgba(23, 19, 17, 0.56);
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+
+  .contact-details__heading {
+    margin: 0;
+    color: #171311;
+    font-size: clamp(3.8rem, 6vw, 6.8rem);
+    font-weight: 400;
+    line-height: 0.98;
+  }
+
+  .contact-details__intro {
+    margin: 1.8rem auto 0;
+    max-width: 58rem;
+    color: rgba(23, 19, 17, 0.72);
+    font-size: clamp(1.55rem, 2vw, 1.85rem);
+    line-height: 1.75;
+  }
+
+  .contact-details__layout {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .contact-details__panel,
+  .contact-details__socials {
+    border: 1px solid rgba(23, 19, 17, 0.08);
+    border-radius: 8px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(255, 249, 245, 0.72));
+    box-shadow:
+      0 24px 54px rgba(23, 19, 17, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(16px) saturate(1.06);
+    -webkit-backdrop-filter: blur(16px) saturate(1.06);
+  }
+
+  .contact-details__panel {
+    padding: clamp(2.2rem, 3vw, 3.6rem);
+  }
+
+  .contact-details__grid {
+    display: grid;
+    gap: 1.2rem;
+  }
+
+  .contact-details__item {
+    display: grid;
+    gap: 0.85rem;
+    padding: 1.8rem 0;
+    border-bottom: 1px solid rgba(23, 19, 17, 0.08);
+  }
+
+  .contact-details__item:first-child {
+    padding-top: 0;
+  }
+
+  .contact-details__item:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .contact-details__label,
+  .contact-details__social-label {
+    margin: 0;
+    color: rgba(123, 92, 73, 0.95);
+    font-size: 1.18rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+
+  .contact-details__value {
+    margin: 0;
+    color: #171311;
+    font-size: clamp(2rem, 2.7vw, 3rem);
+    line-height: 1.12;
+    word-break: break-word;
+  }
+
+  .contact-details__value a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .contact-details__value a:hover {
+    color: rgba(123, 92, 73, 1);
+  }
+
+  .contact-details__note {
+    margin: 0;
+    color: rgba(23, 19, 17, 0.62);
+    font-size: 1.45rem;
+    line-height: 1.7;
+  }
+
+  .contact-details__socials {
+    padding: clamp(2.2rem, 3vw, 3.6rem);
+    display: grid;
+    gap: 1.4rem;
+    align-content: start;
+  }
+
+  .contact-details__socials-header {
+    display: grid;
+    gap: 0.8rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .contact-details__socials-title {
+    margin: 0;
+    color: #171311;
+    font-size: clamp(2.4rem, 3vw, 3.6rem);
+    line-height: 1;
+  }
+
+  .contact-details__socials-copy {
+    margin: 0;
+    color: rgba(23, 19, 17, 0.66);
+    font-size: 1.5rem;
+    line-height: 1.7;
+  }
+
+  .contact-details__social-list {
+    display: grid;
+    gap: 1.4rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .contact-details__social-card {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 1.2rem;
+    align-items: start;
+    min-height: 100%;
+    padding: 1.8rem 2rem;
+    border: 1px solid rgba(123, 92, 73, 0.14);
+    border-radius: 8px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 241, 235, 0.8));
+    box-shadow:
+      0 16px 34px rgba(23, 19, 17, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.82);
+    text-decoration: none;
+    transition:
+      transform 0.28s ease,
+      border-color 0.28s ease,
+      box-shadow 0.28s ease,
+      background 0.28s ease;
+  }
+
+  .contact-details__social-card:focus-visible {
+    outline: 0.2rem solid rgba(123, 92, 73, 0.32);
+    outline-offset: 0.2rem;
+  }
+
+  .contact-details__social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.4rem;
+    height: 4.4rem;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(123, 92, 73, 0.12), rgba(123, 92, 73, 0.18));
+    color: #4d382c;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  }
+
+  .contact-details__social-icon .icon,
+  .contact-details__social-icon svg {
+    width: 1.9rem;
+    height: 1.9rem;
+  }
+
+  .contact-details__social-icon-fallback {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .contact-details__social-body {
+    display: grid;
+    gap: 0.75rem;
+    min-width: 0;
+  }
+
+  .contact-details__social-platform {
+    margin: 0;
+    color: #171311;
+    font-size: 2rem;
+    line-height: 1.15;
+  }
+
+  .contact-details__social-handle,
+  .contact-details__social-copy {
+    margin: 0;
+    color: rgba(23, 19, 17, 0.64);
+    font-size: 1.45rem;
+    line-height: 1.65;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .contact-details__social-card:hover {
+      transform: translateY(-0.3rem);
+      border-color: rgba(123, 92, 73, 0.26);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 238, 231, 0.88));
+      box-shadow:
+        0 22px 40px rgba(23, 19, 17, 0.09),
+        inset 0 1px 0 rgba(255, 255, 255, 0.88);
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .contact-details__layout {
+      grid-template-columns: minmax(0, 1fr);
+      align-items: start;
+      gap: 2.4rem;
+    }
+
+    .contact-details__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.8rem;
+    }
+
+    .contact-details__social-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .contact-details__item {
+      min-height: 100%;
+      padding: 0 1.2rem 0 0;
+      border-bottom: 0;
+      border-right: 1px solid rgba(23, 19, 17, 0.08);
+    }
+
+    .contact-details__item:first-child {
+      padding-top: 0;
+    }
+
+    .contact-details__item:last-child {
+      padding-right: 0;
+      border-right: 0;
+    }
+  }
+{%- endstyle -%}
+
+<div class="contact-details-{{ section.id }} color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
+  <div class="page-width">
+    <div class="contact-details__header">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="contact-details__eyebrow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {{ section.settings.eyebrow | escape }}
+        </p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="contact-details__heading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          {{ section.settings.heading }}
+        </h2>
+      {%- endif -%}
+      {%- if section.settings.intro != blank -%}
+        <div class="contact-details__intro rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          {{ section.settings.intro }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="contact-details__layout">
+      <div class="contact-details__panel{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        <div class="contact-details__grid">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'detail' -%}
+              <article class="contact-details__item" {{ block.shopify_attributes }}>
+                {%- if block.settings.label != blank -%}
+                  <p class="contact-details__label">{{ block.settings.label | escape }}</p>
+                {%- endif -%}
+
+                {%- case block.settings.detail_type -%}
+                  {%- when 'phone' -%}
+                    {%- if block.settings.value_text != blank -%}
+                      <p class="contact-details__value">
+                        <a href="tel:{{ block.settings.value_text | strip | replace: ' ', '' }}">
+                          {{ block.settings.value_text | escape }}
+                        </a>
+                      </p>
+                    {%- endif -%}
+                  {%- when 'email' -%}
+                    {%- if block.settings.value_text != blank -%}
+                      <p class="contact-details__value">
+                        <a href="mailto:{{ block.settings.value_text | escape }}">
+                          {{ block.settings.value_text | escape }}
+                        </a>
+                      </p>
+                    {%- endif -%}
+                  {%- when 'hours' -%}
+                    {%- if block.settings.value_richtext != blank -%}
+                      <div class="contact-details__value rte">{{ block.settings.value_richtext }}</div>
+                    {%- endif -%}
+                  {%- else -%}
+                    {%- if block.settings.value_text != blank -%}
+                      <p class="contact-details__value">{{ block.settings.value_text | escape }}</p>
+                    {%- endif -%}
+                {%- endcase -%}
+
+                {%- if block.settings.note != blank -%}
+                  <p class="contact-details__note">{{ block.settings.note }}</p>
+                {%- endif -%}
+              </article>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <aside class="contact-details__socials{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        <div class="contact-details__socials-header">
+          {%- if section.settings.social_label != blank -%}
+            <p class="contact-details__social-label">{{ section.settings.social_label | escape }}</p>
+          {%- endif -%}
+          {%- if section.settings.social_heading != blank -%}
+            <h3 class="contact-details__socials-title">{{ section.settings.social_heading }}</h3>
+          {%- endif -%}
+          {%- if section.settings.social_copy != blank -%}
+            <p class="contact-details__socials-copy">{{ section.settings.social_copy }}</p>
+          {%- endif -%}
+        </div>
+
+        {%- if section.blocks.size > 0 -%}
+          <div class="contact-details__social-list">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'social' -%}
+                {%- assign social_url = block.settings.url -%}
+                {%- assign platform_handle = block.settings.platform | downcase | strip -%}
+                <a
+                  class="contact-details__social-card"
+                  {% if social_url != blank %}
+                    href="{{ social_url }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  {% else %}
+                    role="link"
+                    aria-disabled="true"
+                  {% endif %}
+                  {{ block.shopify_attributes }}
+                >
+                  <span class="contact-details__social-icon" aria-hidden="true">
+                    {%- case platform_handle -%}
+                      {%- when 'whatsapp', 'whats app' -%}
+                        <svg class="icon icon-whatsapp" viewBox="0 0 24 24" role="presentation">
+                          <path fill="currentColor" d="M12.04 2C6.55 2 2.1 6.45 2.1 11.94c0 1.76.46 3.47 1.33 4.98L2 22l5.23-1.37a9.9 9.9 0 0 0 4.81 1.24h.01c5.49 0 9.95-4.45 9.95-9.94A9.95 9.95 0 0 0 12.04 2Zm0 18.19h-.01a8.2 8.2 0 0 1-4.18-1.14l-.3-.18-3.1.81.83-3.02-.2-.31a8.18 8.18 0 0 1-1.26-4.41c0-4.52 3.69-8.21 8.23-8.21 2.19 0 4.24.85 5.79 2.4a8.13 8.13 0 0 1 2.41 5.8c0 4.53-3.69 8.22-8.21 8.22Zm4.5-6.13c-.25-.13-1.5-.74-1.73-.82-.23-.09-.4-.13-.57.12-.16.25-.65.82-.79.99-.14.16-.29.18-.54.06-.25-.13-1.04-.38-1.99-1.21-.74-.66-1.24-1.46-1.39-1.7-.14-.25-.02-.38.11-.51.12-.12.25-.29.37-.43.12-.14.17-.25.25-.41.08-.16.04-.31-.02-.44-.06-.12-.57-1.37-.78-1.88-.21-.49-.42-.42-.57-.42h-.49c-.16 0-.43.06-.65.31-.23.25-.87.85-.87 2.08 0 1.22.89 2.41 1.01 2.57.12.16 1.75 2.68 4.24 3.76.59.26 1.05.41 1.41.52.59.18 1.13.16 1.56.1.48-.07 1.5-.61 1.71-1.19.21-.58.21-1.08.14-1.19-.06-.1-.22-.16-.48-.29Z"/>
+                        </svg>
+                      {%- when 'instagram' -%}
+                        {{- 'icon-instagram.svg' | inline_asset_content -}}
+                      {%- when 'tiktok' -%}
+                        {{- 'icon-tiktok.svg' | inline_asset_content -}}
+                      {%- when 'facebook' -%}
+                        {{- 'icon-facebook.svg' | inline_asset_content -}}
+                      {%- when 'twitter', 'x', 'x twitter', 'x-twitter' -%}
+                        {{- 'icon-twitter.svg' | inline_asset_content -}}
+                      {%- when 'youtube' -%}
+                        {{- 'icon-youtube.svg' | inline_asset_content -}}
+                      {%- when 'pinterest' -%}
+                        {{- 'icon-pinterest.svg' | inline_asset_content -}}
+                      {%- when 'snapchat' -%}
+                        {{- 'icon-snapchat.svg' | inline_asset_content -}}
+                      {%- when 'tumblr' -%}
+                        {{- 'icon-tumblr.svg' | inline_asset_content -}}
+                      {%- when 'vimeo' -%}
+                        {{- 'icon-vimeo.svg' | inline_asset_content -}}
+                      {%- else -%}
+                        <span class="contact-details__social-icon-fallback">
+                          {{ block.settings.platform | default: '?' | slice: 0 }}
+                        </span>
+                    {%- endcase -%}
+                  </span>
+                  <span class="contact-details__social-body">
+                    {%- if block.settings.platform != blank -%}
+                      <p class="contact-details__social-platform">{{ block.settings.platform | escape }}</p>
+                    {%- endif -%}
+                    {%- if block.settings.handle != blank -%}
+                      <p class="contact-details__social-handle">{{ block.settings.handle | escape }}</p>
+                    {%- endif -%}
+                    {%- if block.settings.copy != blank -%}
+                      <p class="contact-details__social-copy">{{ block.settings.copy }}</p>
+                    {%- endif -%}
+                  </span>
+                </a>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </aside>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Contact details",
+  "tag": "section",
+  "class": "section section-contact-details",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Get in touch"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Support that feels personal, not transactional."
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro",
+      "default": "<p>Add the channels you want customers to use most, and keep the tone calm, clear, and concierge-like.</p>"
+    },
+    {
+      "type": "text",
+      "id": "social_label",
+      "label": "Social label",
+      "default": "Social platforms"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "social_heading",
+      "label": "Social heading",
+      "default": "Stay close to the brand."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "social_copy",
+      "label": "Social copy",
+      "default": "Use these links for launches, rituals, and quiet updates from the studio."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "detail",
+      "name": "Contact detail",
+      "settings": [
+        {
+          "type": "select",
+          "id": "detail_type",
+          "label": "Detail type",
+          "options": [
+            {
+              "value": "phone",
+              "label": "Phone"
+            },
+            {
+              "value": "email",
+              "label": "Email"
+            },
+            {
+              "value": "hours",
+              "label": "Hours"
+            },
+            {
+              "value": "text",
+              "label": "Text"
+            }
+          ],
+          "default": "phone"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Phone"
+        },
+        {
+          "type": "text",
+          "id": "value_text",
+          "label": "Value",
+          "default": "+974 5555 5555"
+        },
+        {
+          "type": "richtext",
+          "id": "value_richtext",
+          "label": "Rich value",
+          "default": "<p>Sunday to Thursday</p><p>10 AM - 6 PM</p>"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "note",
+          "label": "Note",
+          "default": "Available for order support and product guidance."
+        }
+      ]
+    },
+    {
+      "type": "social",
+      "name": "Social platform",
+      "settings": [
+        {
+          "type": "text",
+          "id": "platform",
+          "label": "Platform",
+          "default": "Instagram"
+        },
+        {
+          "type": "text",
+          "id": "handle",
+          "label": "Handle",
+          "default": "@seventhsense"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "copy",
+          "label": "Supporting copy",
+          "default": "Editorial imagery, rituals, and product moments."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact details",
+      "blocks": [
+        {
+          "type": "detail"
+        },
+        {
+          "type": "detail",
+          "settings": {
+            "detail_type": "email",
+            "label": "Email",
+            "value_text": "care@seventhsense.com",
+            "note": "Best for detailed questions, gifting, and routine recommendations."
+          }
+        },
+        {
+          "type": "detail",
+          "settings": {
+            "detail_type": "hours",
+            "label": "Hours",
+            "value_text": "",
+            "value_richtext": "<p>Sunday to Thursday</p><p>10 AM - 6 PM</p>",
+            "note": "We reply as quickly as we can during business hours."
+          }
+        },
+        {
+          "type": "social"
+        },
+        {
+          "type": "social",
+          "settings": {
+            "platform": "WhatsApp",
+            "handle": "+974 5555 5555",
+            "copy": "Direct messages for quick order and support questions."
+          }
+        },
+        {
+          "type": "social",
+          "settings": {
+            "platform": "Facebook",
+            "handle": "Seventhsense",
+            "copy": "Community updates, announcements, and customer touchpoints."
+          }
+        },
+        {
+          "type": "social",
+          "settings": {
+            "platform": "Instagram",
+            "handle": "@seventhsense",
+            "copy": "Editorial imagery, launches, and daily ritual moments."
+          }
+        },
+        {
+          "type": "social",
+          "settings": {
+            "platform": "Snapchat",
+            "handle": "@seventhsense",
+            "copy": "Playful behind-the-scenes glimpses and quick brand moments."
+          }
+        },
+        {
+          "type": "social",
+          "settings": {
+            "platform": "TikTok",
+            "handle": "@seventhsense",
+            "copy": "Short-form texture, ritual, and brand storytelling."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
